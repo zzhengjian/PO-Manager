@@ -190,7 +190,7 @@ export function activate(context: vscode.ExtensionContext) {
 	const pageViewProvider = new PageViewProvider(context);
 	vscode.window.registerTreeDataProvider('pageView', pageViewProvider);
 	vscode.commands.registerCommand('pageView.highlight', async node => {
-		let text = await selCommand.highlight(node.item['locator'])
+		let text = await selCommand.highlight(node.item)
 		if(text) {
 			vscode.window.showInformationMessage(text);
 		}

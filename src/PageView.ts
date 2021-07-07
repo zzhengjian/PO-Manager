@@ -3,7 +3,6 @@ var glob = require("glob");
 var shush = require('shush');
 import * as fs from 'fs';
 import * as path from 'path';
-var camelcase = require('camelcase');
 
 export class PageViewProvider implements vscode.TreeDataProvider<View> {
 
@@ -47,45 +46,20 @@ export class PageViewProvider implements vscode.TreeDataProvider<View> {
 	getChildren(node?: View): Thenable<View[]> {
 		if(node){
 			if(node.contextValue == 'element'){
-				let eleCommands = [
-					{
-						label: "By()",
-						await: false
-					},
-					{
-						label: "Wait();\n",
-						await: true
-					},
-					{
-						label: "Present();\n",
-						await: true
-					},
-					{
-						label: "Visible();\n",
-						await: true
-					},
-					{
-						label: "WaitVisible();\n",
-						await: true
-					},
-					{
-						label: "WaitVisible().click();\n",
-						await: true
-					},
-					{
-						label: "WaitVisible().getText();\n",
-						await: true
-					}
+
+				let commands = [
+					"${element}By()",
+					"await ${element}Wait()\n",
+					"await ${element}Visible()\n",
+					"await ${element}Present()\n",
+					"await ${element}WaitVisible()\n",
+					"await ${element}().click()\n",
+					"await ${element}().getText()\n",
+					"await ${element}WaitVisible()\n",
 				]
-				let children = eleCommands.map(command => {
-					let viewPath = (command.await ? "await ": "") + node.viewPath + command.label
-					let labels = command.label.match(/[a-zA-Z0-9\u4e00-\u9fa5]+/g)
-					let label = ""
-					for(const n of labels){
-						if(label.length >= 30) break
-						label += camelcase(n, {pascalCase: true, preserveConsecutiveUppercase: true})
-					  }
-					let view = new View(label, null, viewPath, vscode.TreeItemCollapsibleState.None)
+				let children = commands.map(command => {
+					let label = command.replace(/\$\{element\}/, node.viewPath)
+					let view = new View(label, null, label, vscode.TreeItemCollapsibleState.None)
 					if(this.pathExists(path.join(this.locatorDir, view.viewPath.replace(/\./, '/') + '.json'))){
 						view.contextValue = 'file'
 					}

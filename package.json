@@ -6,7 +6,7 @@
 		"url": "https://github.com/zzhengjian/Nemo-Locator-Helper.git"
 	},
 	"description": "A tool for managing Page-Object files",
-	"version": "0.1.2",
+	"version": "0.1.0",
 	"publisher": "Alex-Zheng",
 	"icon": "resources/se-nemo.png",
 	"engines": {

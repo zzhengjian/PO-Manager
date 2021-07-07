@@ -203,7 +203,7 @@ export class SelCommand {
         return commands(this.driver)
 	}
 
-	async highlight(locator: string): Promise<string> {
+	async highlight(locator: any): Promise<string> {
 		let _flasher = ["",""]
 
 		let js = `var flasher = [];
