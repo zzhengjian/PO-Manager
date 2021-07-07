@@ -21,6 +21,7 @@ Open the browser by hitting a browser icon and open the application. Go to the p
 
 ## Add Elements : 
 It is same as Add Element but here we can select multiple elements at once by selecting a area of the elements in UI. 
+
 ![AddElements](https://github.com/zzhengjian/PO-Manager/blob/main/docs/AddElements.gif)
 
 ## Update Element:
