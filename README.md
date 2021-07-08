@@ -1,13 +1,19 @@
-# Basic Information : 
 
-# Why VSCODE Extensions are useful?
-Extensions to your IDE are invaluable to speed up your work without reducing the quality of your output.
+# Why PO-Manager are useful?
+PO-Manager provides the capability to recognize webelements and convert them to the page objects and act on it.
+It can save tons of effect to create/maintain your locator files and also speed up your automation.
+
+## Prerequisite: 
+Get Chrome installed and chromedriver located in the PATH
+
+-Before interact with the browser, you need to start a webdriver browser session.
+![StartBrowser](https://github.com/zzhengjian/PO-Manager/blob/main/docs/StartBrowser.gif)
 
 # Add and Update Elements
 Now identifying elements in web page and writing xpath became easy by using Add Element and Update Element function.
 
 ## Add Element : 
-Open the browser by hitting a browser icon and open the application. Go to the particular locator.json file or create a new file and right click on the file, click on Add Element and select the element in the UI. The element xpath is getting generated automatically in .json file.
+Open the browser by hitting a browser icon and open the application. Go to the particular locator.json file or create a new file and right click on the file, click on Add Element and select the element in the UI. The element object is getting generated automatically in .json file.
 ![AddElement](https://github.com/zzhengjian/PO-Manager/blob/main/docs/AddElement.gif)
 
 ## Add Elements : 
@@ -21,28 +27,27 @@ Right click on the element and click update element and select the element which
 
 ![UpdateLocator](https://github.com/zzhengjian/PO-Manager/blob/main/docs/UpdateLocator.gif)
 
-### How to use Locator Extensions
--	You can try hit the chrome icon to stat the browser, visit the application by entering url and test the commands.
--	You can try hit 3 dots beside locators and get below Extensions 
-  * closeTab – Clik to close the tab
-  *	getCurrenturl – Click to get the current url
-  *	switchToMainTab – Click to switch to main tab of the application
-  *	switchToNextTab – Click to go to next tab when multiple tabs are opened.
-
 
 Whenever new locators are added to .json file refresh the LOCATORS. The newly added locator will be displayed in LOCATORS list
 Highlight Element : Whenever element is visible and exists user can highlight the element.
 ![Highlights](https://github.com/zzhengjian/PO-Manager/blob/main/docs/HighlightElement.gif)
 
-There are multiple functions as listed below when user right click on locator
+
+## Debug with the elements:
+There are multiple functions as listed below when user right click on the element object
  E.g : 
   *	Clear
   *	Click
-  * getText etc
+  * getText
+  * sendKey etc
+
+This will call original selenium commands and you can use this to check if selenium actions work for the defined element.
 
 # PAGE VIEW:
-1. Launch a automation project and you can see PAGE VIEWS in the left explorer panel. 
-   -if not, please go to vscode setting -> Extentions -> JSON Locator File and update the Locator Folder value.
+   Also it provide a PAGE VIEWS in the left explorer panel. The view will load all the page-object files for you to navigate through them quickly.
+  * ps: please go to vscode setting -> Extentions -> JSON Locator File and update the Locator Folder value to your project folder which save all the locators.
+![PageViews](https://github.com/zzhengjian/PO-Manager/blob/main/docs/PageViews.gif)
+   
 
 
 
