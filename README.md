@@ -13,7 +13,8 @@ Get Chrome installed and chromedriver located in the PATH
 Now identifying elements in web page and writing xpath became easy by using Add Element and Update Element function.
 
 ## Add Element : 
-Open the browser by hitting a browser icon and open the application. Go to the particular locator.json file or create a new file and right click on the file, click on Add Element and select the element in the UI. The element object is getting generated automatically in .json file.
+Go to the particular locator.json file or create a new file and right click on the file, click on Add Element and select the element in the UI. The element object is getting generated automatically in .json file.
+
 ![AddElement](https://github.com/zzhengjian/PO-Manager/blob/main/docs/AddElement.gif)
 
 ## Add Elements : 
@@ -46,6 +47,7 @@ This will call original selenium commands and you can use this to check if selen
 # PAGE VIEW:
    Also it provide a PAGE VIEWS in the left explorer panel. The view will load all the page-object files for you to navigate through them quickly.
   * ps: please go to vscode setting -> Extentions -> JSON Locator File and update the Locator Folder value to your project folder which save all the locators.
+
 ![PageViews](https://github.com/zzhengjian/PO-Manager/blob/main/docs/PageViews.gif)
    
 
