@@ -7,28 +7,7 @@ import { JsonOutlineProvider } from './jsonOutline';
 import {SelCommand} from './SelCommand'
 import { Builder, By} from 'selenium-webdriver';
 import { PageViewProvider } from './PageView';
-const open = require('open');
-const open_darwin = require('mac-open');
 
-// decide what os should be used
-// possible node values 'darwin', 'freebsd', 'linux', 'sunos' or 'win32'
-const platform = process.platform;
-
-// open file in custom browser
-function openInSpecificPlatform(e: string, op: any, customBrowser: string) {
-    customBrowser ? op(e, customBrowser) : op(e);
-}
-
-// common function for file opening
-function openFile(url: string, customBrowser: string) {
-    // check if it is html file
-	if (platform === 'darwin') {
-		openInSpecificPlatform(url, open_darwin, customBrowser);
-	}
-	else {
-		openInSpecificPlatform(url, open, customBrowser);
-	}
-}
 
 let driver = null, selCommand = null
 export function activate(context: vscode.ExtensionContext) {
