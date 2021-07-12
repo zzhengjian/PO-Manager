@@ -128,18 +128,23 @@ export function activate(context: vscode.ExtensionContext) {
 		vscode.window.showInformationMessage(text);
 	});
 
-	vscode.commands.registerCommand('extension.updateElement', async offset => {
+	vscode.commands.registerCommand('extension.updateElement', async () => {
 		let locator = await selCommand.selectElement()
 		jsonOutlineProvider.updateLocator(locator)
 	});
 
-	vscode.commands.registerCommand('extension.generateElement', async offset => {
+	vscode.commands.registerCommand('extension.generateElement', async () => {
 		let jsonElement = await selCommand.generateElement()
 		jsonOutlineProvider.addElement(jsonElement)
 	});
 
-	vscode.commands.registerCommand('extension.generateElements', async offset => {
+	vscode.commands.registerCommand('extension.generateElements', async () => {
 		let jsonElements = await selCommand.generateElements()
+		jsonOutlineProvider.addElements(jsonElements)
+	});
+
+	vscode.commands.registerCommand('extension.generateAllElements', async () => {
+		let jsonElements = await selCommand.generateAllElements()
 		jsonOutlineProvider.addElements(jsonElements)
 	});
 

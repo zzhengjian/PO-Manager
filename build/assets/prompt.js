@@ -178,6 +178,13 @@ window.__side.generateElements = async (callback, options) => {
   }).then(callback)
 }
 
+window.__side.generateAllElements = async (callback, options) => {
+  await window.__side.postMessage(window, {
+    action: 'generateAllElements',
+    builderOptions: options
+  }).then(callback)
+}
+
 window.__side.attach = () => {
   window.prompt = function(text, defaultText) {
     let result = window.__originalPrompt(text, defaultText)

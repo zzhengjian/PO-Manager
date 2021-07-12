@@ -161,6 +161,15 @@ export class SelCommand {
 					})
 	}
 
+	async generateAllElements(): Promise<string>  {
+		let options = {pascalCase: this.pascalCase, preserveConsecutiveUppercase: this.preserveConsecutiveUppercase}
+		return this.driver.executeAsyncScript(`var callback = arguments[arguments.length - 1]; 
+												window.__side.generateAllElements(callback, arguments[0]);`, options)
+					.then(value => {
+						return value
+					})
+	}
+
 	async hover(locator: string): Promise<string>  {
 		let ele = await this.find(locator)
 		await this.driver.actions().mouseMove(ele).perform()

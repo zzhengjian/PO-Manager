@@ -6,9 +6,9 @@
 		"url": "https://github.com/zzhengjian/Nemo-Locator-Helper.git"
 	},
 	"description": "A tool for managing Page-Object files",
-	"version": "0.1.1",
+	"version": "0.1.4",
 	"publisher": "AlexZheng",
-	"icon": "resources/se-nemo.png",
+	"icon": "resources/se-icon.png",
 	"engines": {
 		"vscode": "^1.52.0"
 	},
@@ -134,6 +134,10 @@
 				"title": "Add Elements"
 			},
 			{
+				"command": "extension.generateAllElements",
+				"title": "Add All Elements"
+			},
+			{
 				"command": "extension.stopDriver",
 				"title": "Quit Chrome"
 			},
@@ -195,6 +199,11 @@
 				},
 				{
 					"command": "extension.generateElements",
+					"group": "selenium@group",
+					"when": "WebdriverEnabled && jsonOutlineEnabled"
+				},
+				{
+					"command": "extension.generateAllElements",
 					"group": "selenium@group",
 					"when": "WebdriverEnabled && jsonOutlineEnabled"
 				}
