@@ -3,10 +3,10 @@
 	"displayName": "PO-Manager",
 	"repository": {
 		"type": "git",
-		"url": "https://github.com/zzhengjian/Nemo-Locator-Helper.git"
+		"url": "https://github.com/zzhengjian/PO-Manager.git"
 	},
 	"description": "A tool for managing Page-Object files",
-	"version": "0.1.6",
+	"version": "0.1.7",
 	"publisher": "AlexZheng",
 	"icon": "resources/se-icon.png",
 	"engines": {
