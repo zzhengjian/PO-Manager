@@ -3,10 +3,14 @@
 PO-Manager provides the capability to recognize webelements and convert them to the page objects and act on it.
 It can save tons of effect to create/maintain your locator files and also speed up your automation.
 
+## Installation: 
+Search PO-Manager in vscode Extenstion Marketplace and install it.
+
 ## Prerequisite: 
 Get Chrome installed and chromedriver located in the PATH
 
 -Before interact with the browser, you need to start a webdriver browser session.
+
 ![StartBrowser](https://github.com/zzhengjian/PO-Manager/blob/main/docs/StartBrowser.gif)
 
 # Add and Update Elements
