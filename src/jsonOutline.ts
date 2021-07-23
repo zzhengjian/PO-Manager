@@ -146,8 +146,7 @@ export class JsonOutlineProvider implements vscode.TreeDataProvider<number> {
 		if (vscode.window.activeTextEditor) {
 			if (vscode.window.activeTextEditor.document.uri.scheme === 'file' ) {
 				const enabled = (vscode.window.activeTextEditor.document.languageId === 'json' 
-						|| vscode.window.activeTextEditor.document.languageId === 'jsonc')
-						&& vscode.window.activeTextEditor.document.uri.path.includes('locator');
+						|| vscode.window.activeTextEditor.document.languageId === 'jsonc');
 				vscode.commands.executeCommand('setContext', 'jsonOutlineEnabled', enabled);
 				if (enabled) {
 					this.refresh();

@@ -55,7 +55,9 @@ export class PageViewProvider implements vscode.TreeDataProvider<View> {
 					"await ${element}WaitVisible()\n",
 					"await ${element}().click()\n",
 					"await ${element}().getText()\n",
-					"await ${element}WaitVisible()\n",
+					"await ${element}().sendKeys('default value')\n",
+					"await ${element}TextEquals('default value')\n",
+					"await ${element}AttrEquals('attribute','default value')\n"
 				]
 				let children = commands.map(command => {
 					let label = command.replace(/\$\{element\}/, node.viewPath)
