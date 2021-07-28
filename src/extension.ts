@@ -22,13 +22,9 @@ export function activate(context: vscode.ExtensionContext) {
 			//driver = new Builder().forBrowser('chrome').build();
 			const builder = new Builder().withCapabilities({
 				browserName: 'chrome',
-				// vendor prefix required as of ChromeDriver 75
-				// https://groups.google.com/d/msg/chromedriver-users/ZnGlzYfsgt4/IbEHKSW8AQAJ
 				'goog:chromeOptions': {
 				  // Don't set it to headless as extensions dont work in general
 				  // when used in headless mode
-				  // https://pptr.dev/#?product=Puppeteer&version=v1.12.2&show=api-working-with-chrome-extensions
-				  // in production it really doesn't matter as recording in headless mode doesn't make sense
 				  args: [`load-extension=${path.join(__dirname + '../../build')}`],
 				},
 			  })

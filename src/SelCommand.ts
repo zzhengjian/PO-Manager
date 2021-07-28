@@ -128,10 +128,6 @@ export class SelCommand {
 
 	}
 
-	private setNameBuilderOptions(options): Promise<string>  {
-		return this.driver.executeScript(`window.__side.setBuilderOptions(arguments[0]);`, options)
-	}
-
 	async selectElement(): Promise<string>  {
 		await this.showBrowser()
 		return this.driver.executeAsyncScript(`var callback = arguments[arguments.length - 1]; 

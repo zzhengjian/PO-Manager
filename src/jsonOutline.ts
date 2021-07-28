@@ -244,30 +244,6 @@ export class JsonOutlineProvider implements vscode.TreeDataProvider<number> {
 		return textArr.join('|')
 	}
 
-
-	private getIcon(node: json.Node): any {
-		const nodeType = node.type;
-		if (nodeType === 'boolean') {
-			return {
-				light: this.context.asAbsolutePath(path.join('resources', 'light', 'boolean.svg')),
-				dark: this.context.asAbsolutePath(path.join('resources', 'dark', 'boolean.svg'))
-			};
-		}
-		if (nodeType === 'string') {
-			return {
-				light: this.context.asAbsolutePath(path.join('resources', 'light', 'string.svg')),
-				dark: this.context.asAbsolutePath(path.join('resources', 'dark', 'string.svg'))
-			};
-		}
-		if (nodeType === 'number') {
-			return {
-				light: this.context.asAbsolutePath(path.join('resources', 'light', 'number.svg')),
-				dark: this.context.asAbsolutePath(path.join('resources', 'dark', 'number.svg'))
-			};
-		}
-		return null;
-	}
-
 	private getLabel(node: json.Node): string {
 		if (node.parent.type === 'array') {
 			const prefix = node.parent.children.indexOf(node).toString();
