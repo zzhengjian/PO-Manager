@@ -1,3 +1,5 @@
+## v0.1.9
+* support config elementCommands/elementNameResolver in setting
 ## v0.1.8
 * remove locator folder limitation
 ## v0.1.7
