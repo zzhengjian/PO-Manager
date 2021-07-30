@@ -341,7 +341,7 @@
 		},
 		"configuration": [
 			{
-				"title": "JSON Locator File",
+				"title": "PO-Manager",
 				"properties": {
 					"jsonOutline.autorefresh": {
 						"type": "boolean",
@@ -364,6 +364,16 @@
 						"scope": "application",
 						"description": "set true to preserveConsecutiveUppercase  Foo-BAR => FooBAR",
 						"default": true
+					},
+					"pageView.elementCommands": {
+						"type": "array",
+						"scope": "application",
+						"description": "The element commands set for script generating"
+					},
+					"pageView.elementNameResolver": {
+						"type": "string",
+						"scope": "application",
+						"description": "The element name resolver from: elementPath (folderName.pageName.elementName)"
 					}
 				}
 			}

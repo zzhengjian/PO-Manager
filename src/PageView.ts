@@ -10,10 +10,15 @@ export class PageViewProvider implements vscode.TreeDataProvider<View> {
 	readonly onDidChangeTreeData: vscode.Event<View | null> = this._onDidChangeTreeData.event;
 	private views: any;
 	public  locatorDir = path.join(vscode.workspace.workspaceFolders[0].uri.fsPath, vscode.workspace.getConfiguration('jsonOutline').get('locatorFolder'))
+	public  elementCommands: string[] = vscode.workspace.getConfiguration('pageView').get('elementCommands')
+	public  elementNameResolver: string = vscode.workspace.getConfiguration('pageView').get('elementNameResolver')
+	
 	constructor(private context: vscode.ExtensionContext) {
 		this.views = this.getViews();
 		vscode.workspace.onDidChangeConfiguration(() => {
 			this.locatorDir = path.join(vscode.workspace.workspaceFolders[0].uri.fsPath, vscode.workspace.getConfiguration('jsonOutline').get('locatorFolder'))
+			this.elementCommands = vscode.workspace.getConfiguration('pageView').get('elementCommands')
+			this.elementNameResolver = vscode.workspace.getConfiguration('pageView').get('elementNameResolver')
 			this.refresh()
 		});
 	}
@@ -47,20 +52,29 @@ export class PageViewProvider implements vscode.TreeDataProvider<View> {
 		if(node){
 			if(node.contextValue == 'element'){
 
-				let commands = [
-					"${element}By()",
-					"await ${element}Wait()\n",
-					"await ${element}Visible()\n",
-					"await ${element}Present()\n",
-					"await ${element}WaitVisible()\n",
-					"await ${element}().click()\n",
-					"await ${element}().getText()\n",
-					"await ${element}().sendKeys('default value')\n",
-					"await ${element}TextEquals('default value')\n",
-					"await ${element}AttrEquals('attribute','default value')\n"
-				]
-				let children = commands.map(command => {
-					let label = command.replace(/\$\{element\}/, node.viewPath)
+				let elementCommands = []
+				elementCommands = this.elementCommands
+				if(!elementCommands || elementCommands.length<=0){
+					elementCommands = [
+						"${element}By()",
+						"await ${element}Wait()\n",
+						"await ${element}Visible()\n",
+						"await ${element}Present()\n",
+						"await ${element}WaitVisible()\n",
+						"await ${element}().click()\n",
+						"await ${element}().getText()\n",
+						"await ${element}().sendKeys('default value')\n",
+						"await ${element}TextEquals('default value')\n",
+						"await ${element}AttrEquals('attribute','default value')\n"
+					]
+				}
+				let elementNameResolver = this.elementNameResolver
+				if(!elementNameResolver){
+					elementNameResolver = 'elementPath'
+				}
+				let resolver = new Function("elementPath", "return " + elementNameResolver) 
+				let children = elementCommands.map(command => {
+					let label = command.replace(/\$\{element\}/, resolver(node.viewPath))
 					let view = new View(label, null, label, vscode.TreeItemCollapsibleState.None)
 					if(this.pathExists(path.join(this.locatorDir, view.viewPath.replace(/\./, '/') + '.json'))){
 						view.contextValue = 'file'
