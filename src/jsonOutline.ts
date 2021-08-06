@@ -68,11 +68,13 @@ export class JsonOutlineProvider implements vscode.TreeDataProvider<number> {
 			});
 	}
 
-	updateLocator(locator: string): void {
+	updateLocator(locator: string, offset: number): void {
+		const path = json.getLocation(this.text, offset).path;
+		const valueNode = json.findNodeAtLocation(this.tree, path);
+		const range = new vscode.Range(this.editor.document.positionAt(valueNode.offset), this.editor.document.positionAt(valueNode.offset + valueNode.length))
 		this.editor.edit(editBuilder => {
-			let selection = this.editor.selection
 			let ele = parse_locator(locator)
-			editBuilder.replace(new vscode.Range(selection.start, selection.end), jsonFormat(ele));
+			editBuilder.replace(range, jsonFormat(ele));
 		});
 
 		function parse_locator(locator) {

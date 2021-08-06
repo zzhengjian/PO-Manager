@@ -6,7 +6,7 @@
 		"url": "https://github.com/zzhengjian/PO-Manager.git"
 	},
 	"description": "A tool for managing Page-Object files",
-	"version": "0.1.9",
+	"version": "0.1.10",
 	"publisher": "AlexZheng",
 	"icon": "resources/se-icon.png",
 	"engines": {
@@ -123,7 +123,11 @@
 			},
 			{
 				"command": "extension.updateElement",
-				"title": "Update Element"
+				"title": "Update Element",
+				"icon": {
+					"light": "resources/light/update.png",
+					"dark": "resources/dark/update.png"
+				}
 			},
 			{
 				"command": "extension.generateElement",
@@ -295,7 +299,7 @@
 				{
 					"command": "extension.updateElement",
 					"when": "view == jsonOutline && WebdriverEnabled && viewItem == element",
-					"group": "inspectCommand"
+					"group": "inline"
 				},
 				{
 					"command": "extension.clear",
@@ -345,7 +349,7 @@
 				"properties": {
 					"jsonOutline.autorefresh": {
 						"type": "boolean",
-						"default": false
+						"default": true
 					},
 					"jsonOutline.locatorFolder": {
 						"type": "string",
