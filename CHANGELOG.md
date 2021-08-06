@@ -1,7 +1,9 @@
 
 v0.1.10
 
-* enhance update element Locator
+* move update element Locator to inline command right behind highlight icon.
+* fix issue when duplicated elementName override the previous one.
+* enhance logic for start/quit browser.
   
 v0.1.9
 

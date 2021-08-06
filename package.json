@@ -62,6 +62,14 @@
 				}
 			},
 			{
+				"command": "pageView.stopDriver",
+				"title": "Stop Chrome",
+				"icon": {
+					"light": "resources/light/stop.png",
+					"dark": "resources/dark/stop.png"
+				}
+			},
+			{
 				"command": "extension.highlight",
 				"title": "highlight",
 				"icon": {
@@ -125,8 +133,8 @@
 				"command": "extension.updateElement",
 				"title": "Update Element",
 				"icon": {
-					"light": "resources/light/update.png",
-					"dark": "resources/dark/update.png"
+					"light": "resources/light/updateLocator.png",
+					"dark": "resources/dark/updateLocator.png"
 				}
 			},
 			{
@@ -243,6 +251,11 @@
 				{
 					"command": "extension.switchToNextTab",
 					"when": "view =~ /jsonOutline|pageView/ && WebdriverEnabled"
+				},
+				{
+					"command": "pageView.stopDriver",
+					"when": "view =~ /jsonOutline|pageView/ && WebdriverEnabled",
+					"group": "navigation"
 				},
 				{
 					"command": "pageView.startDriver",

@@ -34,16 +34,22 @@ export function activate(context: vscode.ExtensionContext) {
 			jsonOutlineProvider.refresh()
 		}
 		else{
-			await driver.quit()
-			driver = null
-			vscode.commands.executeCommand('setContext', 'WebdriverEnabled', false);
-			jsonOutlineProvider.refresh()
+			try {
+				let handle = await driver.getWindowHandle();
+				await driver.switchTo().window(handle)
+			} catch (error) {
+				vscode.window.showErrorMessage("browser is closed unexpectedly, please reopen the browser")
+			}
+			
 		}
 		
 		
 	});
-	vscode.commands.registerCommand('extension.stopDriver', async () => {
+	vscode.commands.registerCommand('pageView.stopDriver', async () => {
 		await driver.quit()
+		driver = null
+		vscode.commands.executeCommand('setContext', 'WebdriverEnabled', false);
+		jsonOutlineProvider.refresh()
 	});
 	vscode.commands.registerCommand('extension.highlight', async offset => {
 		let locator = jsonOutlineProvider.getLocator(offset)	
