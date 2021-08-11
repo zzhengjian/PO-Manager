@@ -55,7 +55,7 @@ This will call original selenium commands and you can use this to check if selen
 
 # PAGE VIEW:
    Also it provide a PAGE VIEWS in the left explorer panel. The view will load all the page-object files for you to navigate through them quickly.
-  * ps: please go to vscode setting -> Extentions -> JSON Locator File and update the Locator Folder value to your project folder which save all the locators.
+  * ps: please go to vscode setting -> Extentions -> PO-Manager and update the Locator Folder value to your project folder which save all the locators.
 
 ![PageViews](https://github.com/zzhengjian/PO-Manager/blob/main/docs/PageViews.gif)
    
