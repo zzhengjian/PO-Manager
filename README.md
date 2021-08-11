@@ -6,13 +6,13 @@ It can save tons of effect to create/maintain your locator files and also speed 
 ## Installation: 
 Search PO-Manager in vscode Extenstion Marketplace and install it.
 
-![VsCode-Extension](https://github.com/zzhengjian/PO-Manager/blob/main/docs/VsCode-Extension.gif)
+![VsCode-Extension](https://github.com/zzhengjian/PO-Manager/blob/main/docs/VsCode-Extension.png)
 
 ## Prerequisite: 
 Get Chrome installed and chromedriver located in the PATH
 - Open the terminal and run chromedriver to check if chromedriver works good.
 
-![chromedriver](https://github.com/zzhengjian/PO-Manager/blob/main/docs/chromedriver.gif)
+![chromedriver](https://github.com/zzhengjian/PO-Manager/blob/main/docs/chromedriver.png)
 
 -Before interact with the browser, you need to start a webdriver browser session.
 
