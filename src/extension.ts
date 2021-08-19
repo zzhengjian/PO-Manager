@@ -35,8 +35,8 @@ export function activate(context: vscode.ExtensionContext) {
 		}
 		else{
 			try {
-				let handle = await driver.getWindowHandle();
-				await driver.switchTo().window(handle)
+				let handles = await driver.getAllWindowHandles();
+				await driver.switchTo().window(handles[0])
 			} catch (error) {
 				vscode.window.showErrorMessage("browser is closed unexpectedly, please reopen the browser")
 			}

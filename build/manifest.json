@@ -1,9 +1,9 @@
 {
-  "description": "Selenium IDE Recorder",
+  "description": "PO-Manager",
   "manifest_version": 2,
-  "name": "Selenium IDE",
+  "name": "PO-Manager",
   "version": "1.0.0",
-  "homepage_url": "https://github.com/SeleniumHQ/selenium-ide",
+  "homepage_url": "https://github.com/zzhengjian/side",
   "icons": {
     "16": "icons/icon16.png",
     "32": "icons/icon32.png",
@@ -16,7 +16,8 @@
       "32": "icons/icon_menu32.png",
       "64": "icons/icon_menu64.png"
     },
-    "default_title": "Selenium IDE"
+    "default_title": "PO-Manager",
+    "default_popup": "popup.html"
   },
   "permissions": [
     "tabs",

@@ -1,4 +1,8 @@
 
+v0.1.11
+
+* fix error of LOCATOR_DETECTION_FAILED for some elements 
+
 v0.1.10
 
 * move update element Locator to inline command right behind highlight icon.
