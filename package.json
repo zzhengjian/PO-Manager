@@ -13,7 +13,7 @@
 		"vscode": "^1.52.0"
 	},
 	"categories": [
-		"Other"
+		"Testing", "Debuggers"
 	],
 	"activationEvents": [
 		"onLanguage:json",

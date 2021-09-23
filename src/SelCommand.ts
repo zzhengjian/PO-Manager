@@ -19,6 +19,16 @@ export class SelCommand {
 		});
 	}
 
+	selectParentLocator(): void {
+		await this.showBrowser()
+		this.driver.executeAsyncScript(`var callback = arguments[arguments.length - 1]; 
+												window.__side.selectElement(callback);`)
+			.then(value => {
+			this.parentLocator = value
+			vscode.window.showInformationMessage(this.parentLocator);
+		})
+	}
+
 	setParentLocator(): void {
 		vscode.window.showInputBox({ placeHolder: 'Enter Parent Locator' })
 		.then(value => {
