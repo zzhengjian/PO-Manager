@@ -56,16 +56,16 @@ export class PageViewProvider implements vscode.TreeDataProvider<View> {
 				elementCommands = this.elementCommands
 				if(!elementCommands || elementCommands.length<=0){
 					elementCommands = [
-						"${element}By()",
-						"await ${element}Wait()\n",
-						"await ${element}Visible()\n",
-						"await ${element}Present()\n",
-						"await ${element}WaitVisible()\n",
-						"await ${element}().click()\n",
-						"await ${element}().getText()\n",
-						"await ${element}().sendKeys('default value')\n",
-						"await ${element}TextEquals('default value')\n",
-						"await ${element}AttrEquals('attribute','default value')\n"
+						"{element}By()",
+						"await {element}Wait()\n",
+						"await {element}Visible()\n",
+						"await {element}Present()\n",
+						"await {element}WaitVisible()\n",
+						"await {element}().click()\n",
+						"await {element}().getText()\n",
+						"await {element}().sendKeys('default value')\n",
+						"await {element}TextEquals('default value')\n",
+						"await {element}AttrEquals('attribute','default value')\n"
 					]
 				}
 				let elementNameResolver = this.elementNameResolver
@@ -74,7 +74,7 @@ export class PageViewProvider implements vscode.TreeDataProvider<View> {
 				}
 				let resolver = new Function("elementPath", "return " + elementNameResolver) 
 				let children = elementCommands.map(command => {
-					let label = command.replace(/\$\{element\}/, resolver(node.viewPath))
+					let label = command.replace(/\{element\}/, resolver(node.viewPath))
 					let view = new View(label, null, label, vscode.TreeItemCollapsibleState.None)
 					if(this.pathExists(path.join(this.locatorDir, view.viewPath.replace(/\./, '/') + '.json'))){
 						view.contextValue = 'file'

@@ -82,6 +82,14 @@
 				"title": "getText"
 			},
 			{
+				"command": "extension.getAttribute",
+				"title": "getAttribute"
+			},
+			{
+				"command": "extension.getCssValue",
+				"title": "getCssValue"
+			},
+			{
 				"command": "extension.getElementInfo",
 				"title": "getElementInfo"
 			},
@@ -119,7 +127,7 @@
 			},
 			{
 				"command": "extension.hover",
-				"title": "hover"
+				"title": "mouseover"
 			},
 			{
 				"command": "extension.jsHover",
@@ -156,6 +164,10 @@
 			{
 				"command": "extension.getCurrentUrl",
 				"title": "getCurrentUrl"
+			},
+			{
+				"command": "extension.selectParentLocator",
+				"title": "selectParentLocator"
 			},
 			{
 				"command": "extension.setParentLocator",
@@ -231,18 +243,19 @@
 					"when": "view =~ /jsonOutline|pageView/ && WebdriverEnabled"
 				},
 				{
+					"command": "extension.selectParentLocator",
+					"when": "view =~ /jsonOutline|pageView/ && WebdriverEnabled && enableParentLocator",
+					"group": "parentLocator"
+				},
+				{
 					"command": "extension.setParentLocator",
-					"when": "view =~ /jsonOutline|pageView/ && WebdriverEnabled",
+					"when": "view =~ /jsonOutline|pageView/ && WebdriverEnabled && enableParentLocator",
 					"group": "parentLocator"
 				},
 				{
 					"command": "extension.clearParentLocator",
-					"when": "view =~ /jsonOutline|pageView/ && WebdriverEnabled",
+					"when": "view =~ /jsonOutline|pageView/ && WebdriverEnabled && enableParentLocator",
 					"group": "parentLocator"
-				},
-				{
-					"command": "extension.closeTab",
-					"when": "view =~ /jsonOutline|pageView/ && WebdriverEnabled"
 				},
 				{
 					"command": "extension.switchToMainTab",
@@ -271,6 +284,16 @@
 			"view/item/context": [
 				{
 					"command": "extension.getText",
+					"when": "view == jsonOutline && WebdriverEnabled && viewItem == element",
+					"group": "eleCommand"
+				},
+				{
+					"command": "extension.getAttribute",
+					"when": "view == jsonOutline && WebdriverEnabled && viewItem == element",
+					"group": "eleCommand"
+				},
+				{
+					"command": "extension.getCssValue",
 					"when": "view == jsonOutline && WebdriverEnabled && viewItem == element",
 					"group": "eleCommand"
 				},
@@ -363,6 +386,10 @@
 					"jsonOutline.autorefresh": {
 						"type": "boolean",
 						"default": true
+					},
+					"jsonOutline.enableParentLocator": {
+						"type": "boolean",
+						"default": false
 					},
 					"jsonOutline.locatorFolder": {
 						"type": "string",

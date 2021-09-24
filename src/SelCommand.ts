@@ -5,21 +5,26 @@ export class SelCommand {
 
 	private driver: WebDriver;
 	private parentLocator: string;
+	private enableParentLocator: boolean;
 	private pascalCase: any;
 	private preserveConsecutiveUppercase: any;
 	
 	constructor(driver: WebDriver) {
 		this.driver = driver
 		this.parentLocator = ""
+		this.enableParentLocator = vscode.workspace.getConfiguration('jsonOutline').get('enableParentLocator')
 		this.pascalCase = vscode.workspace.getConfiguration('jsonOutline').get('pascalCase')
 		this.preserveConsecutiveUppercase = vscode.workspace.getConfiguration('jsonOutline').get('preserveConsecutiveUppercase')
 		vscode.workspace.onDidChangeConfiguration(() => {
+			this.enableParentLocator = vscode.workspace.getConfiguration('jsonOutline').get('enableParentLocator');
+			vscode.commands.executeCommand('setContext', 'enableParentLocator', this.enableParentLocator);
 			this.pascalCase = vscode.workspace.getConfiguration('jsonOutline').get('pascalCase');
 			this.preserveConsecutiveUppercase = vscode.workspace.getConfiguration('jsonOutline').get('preserveConsecutiveUppercase')
 		});
+		vscode.commands.executeCommand('setContext', 'enableParentLocator', this.enableParentLocator);
 	}
 
-	selectParentLocator(): void {
+	async selectParentLocator(): Promise<void> {
 		await this.showBrowser()
 		this.driver.executeAsyncScript(`var callback = arguments[arguments.length - 1]; 
 												window.__side.selectElement(callback);`)
@@ -75,6 +80,24 @@ export class SelCommand {
 		return ele.getText()
 	}
 
+	async getAttribute(locator: string): Promise<string> {
+		let ele = await this.find(locator)
+		let text = await vscode.window.showInputBox({ placeHolder: 'Enter Value' })
+		.then(async attr => {
+			return ele.getAttribute(attr)
+		})
+		return `getAttribute: ` + text
+	}
+
+	async getCssValue(locator: string): Promise<string> {
+		let ele = await this.find(locator)
+		let text = await vscode.window.showInputBox({ placeHolder: 'Enter Value' })
+		.then(async cssStyleProperty => {
+			return ele.getCssValue(cssStyleProperty)
+		})
+		return `getCssValue: ` + text
+	}
+
 	async sendKeys(locator: string): Promise<string> {
 		let text = await vscode.window.showInputBox({ placeHolder: 'Enter Value' })
 		.then(async value => {
@@ -127,14 +150,23 @@ export class SelCommand {
 
 	async showElement(locator: string): Promise<string>  {
 		let ele = await this.find(locator)
-		await this.driver.executeScript("return $(arguments[0]).show();", ele)
-		return "show element for: "+ this.getBy(locator)
+		try {
+			await this.driver.executeScript("$(arguments[0]).show();", ele)
+			return "show element for: "+ this.getBy(locator)
+		} catch (error) {
+			return error.message
+		}
 	}
 
 	async hideElement(locator: string): Promise<string>  {
 		let ele = await this.find(locator)
-		await this.driver.executeScript("return $(arguments[0]).hide();", ele)
-		return "hide element for: "+ this.getBy(locator)
+		try {
+			await this.driver.executeScript("$(arguments[0]).hide();", ele)
+			return "hide element for: "+ this.getBy(locator)
+		} catch (error) {
+			return error.message
+		}
+		
 
 	}
 

@@ -36,10 +36,19 @@ export function activate(context: vscode.ExtensionContext) {
 		else{
 			try {
 				let handles = await driver.getAllWindowHandles();
-				await driver.switchTo().window(handles[0])
-			} catch (error) {
+				try {
+					let handle = await driver.getWindowHandle();
+					await driver.switchTo().window(handle)
+				} catch (error) {
+					await driver.switchTo().window(handles[0])
+					
+				}
+			}
+			catch {
 				vscode.window.showErrorMessage("browser is closed unexpectedly, please reopen the browser")
 			}
+			
+			
 			
 		}
 		
@@ -80,6 +89,18 @@ export function activate(context: vscode.ExtensionContext) {
 	vscode.commands.registerCommand('extension.getText', async offset => {
 		let locator = jsonOutlineProvider.getLocator(offset)
 		let text = await selCommand.getText(locator)
+		vscode.window.showInformationMessage(text);
+	});
+
+	vscode.commands.registerCommand('extension.getAttribute', async offset => {
+		let locator = jsonOutlineProvider.getLocator(offset)
+		let text = await selCommand.getAttribute(locator)
+		vscode.window.showInformationMessage(text);
+	});
+
+	vscode.commands.registerCommand('extension.getCssValue', async offset => {
+		let locator = jsonOutlineProvider.getLocator(offset)
+		let text = await selCommand.getCssValue(locator)
 		vscode.window.showInformationMessage(text);
 	});
 
@@ -157,6 +178,9 @@ export function activate(context: vscode.ExtensionContext) {
 	});
 	vscode.commands.registerCommand('extension.runBatchScript',  async () => {
 		await selCommand.runJsScript()
+	});
+	vscode.commands.registerCommand('extension.selectParentLocator',  async () => {
+		selCommand.selectParentLocator()
 	});
 	vscode.commands.registerCommand('extension.setParentLocator',  async () => {
 		selCommand.setParentLocator()
