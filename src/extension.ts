@@ -34,22 +34,7 @@ export function activate(context: vscode.ExtensionContext) {
 			jsonOutlineProvider.refresh()
 		}
 		else{
-			try {
-				let handles = await driver.getAllWindowHandles();
-				try {
-					let handle = await driver.getWindowHandle();
-					await driver.switchTo().window(handle)
-				} catch (error) {
-					await driver.switchTo().window(handles[0])
-					
-				}
-			}
-			catch {
-				vscode.window.showErrorMessage("browser is closed unexpectedly, please reopen the browser")
-			}
-			
-			
-			
+			await selCommand.showBrowser()
 		}
 		
 		

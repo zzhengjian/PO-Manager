@@ -57,8 +57,18 @@ export class SelCommand {
 	}
 
 	async showBrowser(): Promise<void> {
-		let handle = await this.driver.getWindowHandle();
-		await this.driver.switchTo().window(handle)
+		try {
+			let handles = await this.driver.getAllWindowHandles();
+			try {
+				let handle = await this.driver.getWindowHandle();
+				await this.driver.switchTo().window(handle)
+			} catch (error) {
+				await this.driver.switchTo().window(handles[0])
+			}
+		}
+		catch {
+			vscode.window.showErrorMessage("browser is closed unexpectedly, please reopen the browser")
+		}
 	}
 
 	async switchToMainTab(): Promise<string> {
@@ -84,23 +94,28 @@ export class SelCommand {
 		let ele = await this.find(locator)
 		let text = await vscode.window.showInputBox({ placeHolder: 'Enter Value' })
 		.then(async attr => {
-			return ele.getAttribute(attr)
+			await this.showBrowser()
+			let attrValue = await ele.getAttribute(attr)
+			return attr + ': ' + attrValue
 		})
-		return `getAttribute: ` + text
+		return `getAttribute of ` + text
 	}
 
 	async getCssValue(locator: string): Promise<string> {
 		let ele = await this.find(locator)
 		let text = await vscode.window.showInputBox({ placeHolder: 'Enter Value' })
 		.then(async cssStyleProperty => {
-			return ele.getCssValue(cssStyleProperty)
+			await this.showBrowser()
+			let cssValue = await ele.getCssValue(cssStyleProperty)
+			return cssStyleProperty + ': ' + cssValue
 		})
-		return `getCssValue: ` + text
+		return `getCssValue of ` + text
 	}
 
 	async sendKeys(locator: string): Promise<string> {
 		let text = await vscode.window.showInputBox({ placeHolder: 'Enter Value' })
 		.then(async value => {
+			await this.showBrowser()
 			let ele = await this.find(locator)
 			await ele.sendKeys(value)
 			return value
@@ -127,6 +142,7 @@ export class SelCommand {
 	}
 
 	async click(locator: string): Promise<string>  {
+		await this.showBrowser()
 		let ele = await this.find(locator)
 		try {
 			await ele.click()
@@ -138,12 +154,14 @@ export class SelCommand {
 
 	async jsClick(locator: string): Promise<string>  {
 		let ele = await this.find(locator)
+		await this.showBrowser()
 		await this.driver.executeScript("return arguments[0].click();", ele)
 		return "click on: " + this.getBy(locator)
 	}
 
 	async clear(locator: string): Promise<string>  {
 		let ele = await this.find(locator)
+		await this.showBrowser()
 		await ele.clear()
 		return "clear for: " + this.getBy(locator)
 	}
@@ -209,12 +227,14 @@ export class SelCommand {
 	}
 
 	async hover(locator: string): Promise<string>  {
+		await this.showBrowser()
 		let ele = await this.find(locator)
 		await this.driver.actions().mouseMove(ele).perform()
 		return "hover on element for: "+ this.getBy(locator)
 	}
 
 	async jsHover(locator: string): Promise<string>  {
+		await this.showBrowser()
 		let ele = await this.find(locator)
 		let hoverJs =  "if(document.createEvent){var evObj = document.createEvent('MouseEvents');evObj.initEvent('mouseover', true, false); arguments[0].dispatchEvent(evObj);} else if(document.createEventObject) { arguments[0].fireEvent('onmouseover');}";
 		await this.driver.executeScript(hoverJs, ele)
@@ -297,7 +317,6 @@ export class SelCommand {
 	
 
 	async find(locator: string): WebElement {
-		await this.showBrowser()
 		if(!this.parentLocator){
 			return this.driver.findElement(this.getBy(locator))
 		}
