@@ -1,4 +1,8 @@
 
+v0.1.12
+
+* parentLocator enhancement 
+* 
 v0.1.11
 
 * fix error of LOCATOR_DETECTION_FAILED for some elements 

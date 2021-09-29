@@ -6,14 +6,15 @@
 		"url": "https://github.com/zzhengjian/PO-Manager.git"
 	},
 	"description": "A tool for managing Page-Object files",
-	"version": "0.1.11",
+	"version": "0.1.12",
 	"publisher": "AlexZheng",
 	"icon": "resources/se-icon.png",
 	"engines": {
 		"vscode": "^1.52.0"
 	},
 	"categories": [
-		"Testing", "Debuggers"
+		"Testing",
+		"Debuggers"
 	],
 	"activationEvents": [
 		"onLanguage:json",
