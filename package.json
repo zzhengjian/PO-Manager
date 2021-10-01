@@ -16,6 +16,14 @@
 		"Testing",
 		"Debuggers"
 	],
+	"keywords": [
+        "selenium",
+        "pom",
+        "page object",
+		"page object model",
+		"testing",
+		"nemo"
+    ],
 	"activationEvents": [
 		"onLanguage:json",
 		"onLanguage:jsonc",
