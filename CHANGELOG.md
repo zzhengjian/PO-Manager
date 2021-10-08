@@ -1,4 +1,8 @@
 
+v0.1.13
+
+* enhance showBrowser logic 
+  
 v0.1.12
 
 * parentLocator enhancement 

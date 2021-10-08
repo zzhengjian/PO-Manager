@@ -6,7 +6,7 @@
 		"url": "https://github.com/zzhengjian/PO-Manager.git"
 	},
 	"description": "A tool for managing Page-Object files",
-	"version": "0.1.12",
+	"version": "0.1.13",
 	"publisher": "AlexZheng",
 	"icon": "resources/se-icon.png",
 	"engines": {
@@ -17,13 +17,14 @@
 		"Debuggers"
 	],
 	"keywords": [
-        "selenium",
-        "pom",
-        "page object",
-		"page object model",
+		"selenium",
+		"pom",
+		"page object",
+		"page object models",
 		"testing",
-		"nemo"
-    ],
+		"nemo",
+		"nemo-view"
+	],
 	"activationEvents": [
 		"onLanguage:json",
 		"onLanguage:jsonc",

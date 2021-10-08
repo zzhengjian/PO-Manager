@@ -94,7 +94,6 @@ export class SelCommand {
 		let ele = await this.find(locator)
 		let text = await vscode.window.showInputBox({ placeHolder: 'Enter Value' })
 		.then(async attr => {
-			await this.showBrowser()
 			let attrValue = await ele.getAttribute(attr)
 			return attr + ': ' + attrValue
 		})
@@ -105,7 +104,6 @@ export class SelCommand {
 		let ele = await this.find(locator)
 		let text = await vscode.window.showInputBox({ placeHolder: 'Enter Value' })
 		.then(async cssStyleProperty => {
-			await this.showBrowser()
 			let cssValue = await ele.getCssValue(cssStyleProperty)
 			return cssStyleProperty + ': ' + cssValue
 		})
