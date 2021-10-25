@@ -6,7 +6,7 @@
 		"url": "https://github.com/zzhengjian/PO-Manager.git"
 	},
 	"description": "A tool for managing Page-Object files",
-	"version": "0.1.13",
+	"version": "0.1.14",
 	"publisher": "AlexZheng",
 	"icon": "resources/se-icon.png",
 	"engines": {
@@ -200,6 +200,10 @@
 				"title": "switchToNextTab"
 			},
 			{
+				"command": "extension.switchToFrame",
+				"title": "switchToFrame"
+			},
+			{
 				"command": "pageView.refresh",
 				"title": "refresh",
 				"icon": {
@@ -273,6 +277,10 @@
 				},
 				{
 					"command": "extension.switchToNextTab",
+					"when": "view =~ /jsonOutline|pageView/ && WebdriverEnabled"
+				},
+				{
+					"command": "extension.switchToFrame",
 					"when": "view =~ /jsonOutline|pageView/ && WebdriverEnabled"
 				},
 				{
@@ -401,6 +409,17 @@
 						"type": "boolean",
 						"default": false
 					},
+					"jsonOutline.browsers": {
+						"type": "string",
+						"scope": "application",
+						"description": "choose browsers to work on",
+						"default": "Chrome",
+						"enum": [
+							"Chrome",
+							"Firefox",
+							"Edge"
+						]
+					},
 					"jsonOutline.locatorFolder": {
 						"type": "string",
 						"scope": "application",
@@ -453,8 +472,9 @@
 	"dependencies": {
 		"glob": "^7.1.3",
 		"jsonc-parser": "^3.0.0",
-		"selenium-webdriver": "3.6.0",
+		"selenium-webdriver": "4.0.0",
 		"shush": "^1.0.0",
-		"json-format": "1.0.1"
+		"json-format": "1.0.1",
+		"engine.io": "^3.4.0"
 	}
 }

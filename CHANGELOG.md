@@ -1,4 +1,10 @@
 
+v0.1.14
+
+* Adding support for Firefox and EdgeBrowser
+* Upgrade selenium package to v4.0.0
+  
+
 v0.1.13
 
 * enhance showBrowser logic 

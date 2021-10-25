@@ -5,33 +5,82 @@ import * as path from 'path';
 
 import { JsonOutlineProvider } from './jsonOutline';
 import {SelCommand} from './SelCommand'
-import { Builder, By} from 'selenium-webdriver';
+import { Builder, By, Browser} from 'selenium-webdriver';
 import { PageViewProvider } from './PageView';
+const engine = require('engine.io');
 
 
-let driver = null, selCommand = null
+let driver = null, selCommand:SelCommand = null, server, extSocket
+let browser = vscode.workspace.getConfiguration('jsonOutline').get('browsers')
+vscode.workspace.onDidChangeConfiguration(() => {
+	browser = vscode.workspace.getConfiguration('jsonOutline').get('browsers');
+});
 export function activate(context: vscode.ExtensionContext) {
-
 	const jsonOutlineProvider = new JsonOutlineProvider(context);
 	vscode.window.registerTreeDataProvider('jsonOutline', jsonOutlineProvider);
 	vscode.commands.registerCommand('jsonOutline.refresh', () => jsonOutlineProvider.refresh());
 	vscode.commands.registerCommand('extension.openJsonSelection', range => jsonOutlineProvider.select(range));
 	
 	vscode.commands.registerCommand('pageView.startDriver', async () => {
+		let started = false
 		if(!driver){
-			//driver = new Builder().forBrowser('chrome').build();
-			const builder = new Builder().withCapabilities({
-				browserName: 'chrome',
-				'goog:chromeOptions': {
-				  // Don't set it to headless as extensions dont work in general
-				  // when used in headless mode
-				  args: [`load-extension=${path.join(__dirname + '../../build')}`],
-				},
-			  })
-			driver = await builder.build()
-			selCommand = new SelCommand(driver);
-			vscode.commands.executeCommand('setContext', 'WebdriverEnabled', true);
-			jsonOutlineProvider.refresh()
+			if(browser == "Chrome"){
+				try {
+					//driver = new Builder().forBrowser('chrome').build();
+					const builder = new Builder().withCapabilities({
+						browserName: 'chrome',
+						'goog:chromeOptions': {
+						// Don't set it to headless as extensions dont work in general
+						// when used in headless mode
+						args: [`load-extension=${path.join(__dirname + '../../build')}`],
+						},
+					})
+					driver = await builder.build()
+					started = true
+					vscode.commands.executeCommand('setContext', 'ChromeEnabled', true);
+				} catch (error) {
+					vscode.window.showErrorMessage(error.message);
+				}
+			}
+			else if(browser == "Firefox"){
+				try {
+					driver = await new Builder().forBrowser(Browser.FIREFOX).build();
+					started = true
+				} catch (error) {
+					vscode.window.showErrorMessage(error.message);
+				}
+			}
+			else if(browser == "Edge"){
+				try {
+					driver = await new Builder().forBrowser(Browser.EDGE).build();
+					started = true
+				} catch (error) {
+					vscode.window.showErrorMessage(error.message);
+				}
+			}
+			else if(browser == "IE"){
+				try {
+					driver = await new Builder().forBrowser(Browser.INTERNET_EXPLORER).build();
+					await driver.manage().setTimeouts({implicit: 3})
+					started = true
+				} catch (error) {
+					vscode.window.showErrorMessage(error.message);
+				}
+			}
+			else if(browser == "Safari"){
+				try {
+					driver = await new Builder().forBrowser(Browser.SAFARI).build();
+					started = true
+				} catch (error) {
+					vscode.window.showErrorMessage(error.message);
+				}
+			}
+			if(started){
+				selCommand = new SelCommand(driver);
+				vscode.commands.executeCommand('setContext', 'WebdriverEnabled', true);
+				jsonOutlineProvider.refresh()
+			}
+				
 		}
 		else{
 			await selCommand.showBrowser()
@@ -40,11 +89,18 @@ export function activate(context: vscode.ExtensionContext) {
 		
 	});
 	vscode.commands.registerCommand('pageView.stopDriver', async () => {
-		await driver.quit()
+		try {
+			await driver.quit()
+		} catch (error) {
+			vscode.window.showErrorMessage(error.message);
+		}
 		driver = null
 		vscode.commands.executeCommand('setContext', 'WebdriverEnabled', false);
+		vscode.commands.executeCommand('setContext', 'ChromeEnabled', false);
 		jsonOutlineProvider.refresh()
 	});
+
+
 	vscode.commands.registerCommand('extension.highlight', async offset => {
 		let locator = jsonOutlineProvider.getLocator(offset)	
 		let text = await selCommand.highlight(locator)
@@ -181,6 +237,9 @@ export function activate(context: vscode.ExtensionContext) {
 	});
 	vscode.commands.registerCommand('extension.switchToNextTab',  async () => {
 		await selCommand.switchToNextTab()
+	});
+	vscode.commands.registerCommand('extension.switchToFrame',  async () => {
+		await selCommand.switchToFrame()
 	});
 	
 	const pageViewProvider = new PageViewProvider(context);

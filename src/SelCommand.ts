@@ -77,6 +77,22 @@ export class SelCommand {
 		return `switch to url: `+ await this.driver.getCurrentUrl()
 	}
 
+	async switchToFrame(): Promise<string> {
+		await vscode.window.showInputBox({ placeHolder: 'Enter FrameId' })
+		.then(async FrameId => {
+			if(typeof FrameId == 'number'){
+				await this.driver.switchTo().frame(FrameId)
+			}
+			else{
+				let frame = await this.driver.findElement(By['css'](FrameId))
+				await this.driver.switchTo().frame(frame)
+			}
+			
+		})
+
+		return "switch frame"
+	}
+
 	async switchToNextTab(): Promise<string> {
 		let curHandle = await this.driver.getWindowHandle()
 		let handles = await this.driver.getAllWindowHandles();
