@@ -12,8 +12,10 @@ const engine = require('engine.io');
 
 let driver = null, selCommand:SelCommand = null, server, extSocket
 let browser = vscode.workspace.getConfiguration('jsonOutline').get('browsers')
+vscode.commands.executeCommand('setContext', 'BrowserName', browser);
 vscode.workspace.onDidChangeConfiguration(() => {
 	browser = vscode.workspace.getConfiguration('jsonOutline').get('browsers');
+	vscode.commands.executeCommand('setContext', 'BrowserName', browser);
 });
 export function activate(context: vscode.ExtensionContext) {
 	const jsonOutlineProvider = new JsonOutlineProvider(context);
@@ -21,7 +23,11 @@ export function activate(context: vscode.ExtensionContext) {
 	vscode.commands.registerCommand('jsonOutline.refresh', () => jsonOutlineProvider.refresh());
 	vscode.commands.registerCommand('extension.openJsonSelection', range => jsonOutlineProvider.select(range));
 	
-	vscode.commands.registerCommand('pageView.startDriver', async () => {
+	vscode.commands.registerCommand('pageView.startChrome', startDriver);
+	vscode.commands.registerCommand('pageView.startFirefox', startDriver);
+	vscode.commands.registerCommand('pageView.startEdge', startDriver);
+	
+	async function startDriver(){
 		let started = false
 		if(!driver){
 			if(browser == "Chrome"){
@@ -87,7 +93,7 @@ export function activate(context: vscode.ExtensionContext) {
 		}
 		
 		
-	});
+	}
 	vscode.commands.registerCommand('pageView.stopDriver', async () => {
 		try {
 			await driver.quit()

@@ -64,11 +64,26 @@
 				}
 			},
 			{
-				"command": "pageView.startDriver",
+				"command": "pageView.startChrome",
 				"title": "Start Chrome",
 				"icon": {
 					"light": "resources/light/Google_Chrome.png",
 					"dark": "resources/dark/Google_Chrome.png"
+				}
+			},			{
+				"command": "pageView.startFirefox",
+				"title": "Start Firefox",
+				"icon": {
+					"light": "resources/light/Firefox_logo.png",
+					"dark": "resources/dark/Firefox_logo.png"
+				}
+			},
+			{
+				"command": "pageView.startEdge",
+				"title": "Start Edge",
+				"icon": {
+					"light": "resources/light/Edge_Logo.png",
+					"dark": "resources/dark/Edge_Logo.png"
 				}
 			},
 			{
@@ -233,17 +248,17 @@
 				{
 					"command": "extension.generateElement",
 					"group": "selenium@group",
-					"when": "WebdriverEnabled && jsonOutlineEnabled"
+					"when": "ChromeEnabled && jsonOutlineEnabled"
 				},
 				{
 					"command": "extension.generateElements",
 					"group": "selenium@group",
-					"when": "WebdriverEnabled && jsonOutlineEnabled"
+					"when": "ChromeEnabled && jsonOutlineEnabled"
 				},
 				{
 					"command": "extension.generateAllElements",
 					"group": "selenium@group",
-					"when": "WebdriverEnabled && jsonOutlineEnabled"
+					"when": "ChromeEnabled && jsonOutlineEnabled"
 				}
 			],
 			"view/title": [
@@ -289,8 +304,18 @@
 					"group": "navigation"
 				},
 				{
-					"command": "pageView.startDriver",
-					"when": "view =~ /jsonOutline|pageView/",
+					"command": "pageView.startChrome",
+					"when": "view =~ /jsonOutline|pageView/ && BrowserName == Chrome",
+					"group": "navigation"
+				},
+				{
+					"command": "pageView.startFirefox",
+					"when": "view =~ /jsonOutline|pageView/ && BrowserName == Firefox",
+					"group": "navigation"
+				},
+				{
+					"command": "pageView.startEdge",
+					"when": "view =~ /jsonOutline|pageView/ && BrowserName == Edge",
 					"group": "navigation"
 				},
 				{
@@ -352,7 +377,7 @@
 				},
 				{
 					"command": "extension.updateElement",
-					"when": "view == jsonOutline && WebdriverEnabled && viewItem == element",
+					"when": "view == jsonOutline && ChromeEnabled && viewItem == element",
 					"group": "inline"
 				},
 				{
