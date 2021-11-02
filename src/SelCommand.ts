@@ -61,7 +61,8 @@ export class SelCommand {
 			let handles = await this.driver.getAllWindowHandles();
 			try {
 				let handle = await this.driver.getWindowHandle();
-				await this.driver.switchTo().window(handle)
+				let inTop = await this.driver.executeScript("return window == window.top")
+				if(inTop) await this.driver.switchTo().window(handle)
 			} catch (error) {
 				await this.driver.switchTo().window(handles[0])
 			}
@@ -300,31 +301,41 @@ export class SelCommand {
 						arguments[0].style.outline='${_flasher[0]}';
 						arguments[0].style.background = '${_flasher[1]}';
 						return flasher;`
-		let by = this.getBy(locator)
-		let eleList = null; 
-		if(this.parentLocator){
-			eleList = await this.driver.findElement(this.getBy(this.parentLocator)).findElements(by)
-		}
-		else{
-			eleList = await this.driver.findElements(by)
-		}
+		try {
+			let by = this.getBy(locator)
+			let eleList = null; 
+			if(this.parentLocator){
+				eleList = await this.driver.findElement(this.getBy(this.parentLocator)).findElements(by)
+			}
+			else{
+				eleList = await this.driver.findElements(by)
+			}
 
-		if(eleList.length == 0){
-			return "NoSuchElement with Locator: " + this.getBy(locator)
-		}
-		let ele = eleList[0]
-		if(!await ele.isDisplayed()){
-			return "Element is invisible"
-		}
+			if(eleList.length == 0){
+				return "NoSuchElement with Locator: " + this.getBy(locator)
+			}
+			let ele = eleList[0]
+			if(!await ele.isDisplayed()){
+				return "Element is invisible"
+			}
 
-		await this.showBrowser()
-		//scroll into view
-		await this.driver.executeScript('arguments[0].scrollIntoViewIfNeeded(true)', ele)
-		for(let i=0; i<3; i++){
-			_flasher = await this.driver.executeScript(js, ele);
-			await this.driver.sleep(300)
-			_flasher = await this.driver.executeScript(revertJs, ele);
-			await this.driver.sleep(300)
+			await this.showBrowser()
+			//scroll into view
+			let scrollJs = `if(arguments[0].scrollIntoViewIfNeeded){
+				arguments[0].scrollIntoViewIfNeeded(true)
+			}
+			else{
+				arguments[0].scrollIntoView()
+			}`
+			await this.driver.executeScript(scrollJs, ele)
+			for(let i=0; i<3; i++){
+				_flasher = await this.driver.executeScript(js, ele);
+				await this.driver.sleep(300)
+				_flasher = await this.driver.executeScript(revertJs, ele);
+				await this.driver.sleep(300)
+			}
+		} catch (error) {
+			return error.message
 		}
 		return `Highlighting Element: `+ this.getBy(locator)
 	}
