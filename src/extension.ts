@@ -7,6 +7,7 @@ import { JsonOutlineProvider } from './jsonOutline';
 import {SelCommand} from './SelCommand'
 import { Builder, By, Browser} from 'selenium-webdriver';
 import { PageViewProvider } from './PageView';
+import { DebuggerViewProvider } from './DebuggerViewProvider';
 const engine = require('engine.io');
 
 
@@ -83,6 +84,7 @@ export function activate(context: vscode.ExtensionContext) {
 			}
 			if(started){
 				selCommand = new SelCommand(driver);
+				DebuggerViewProvider.selCommand = selCommand
 				vscode.commands.executeCommand('setContext', 'WebdriverEnabled', true);
 				jsonOutlineProvider.refresh()
 			}
@@ -245,7 +247,18 @@ export function activate(context: vscode.ExtensionContext) {
 		await selCommand.switchToNextTab()
 	});
 	vscode.commands.registerCommand('extension.switchToFrame',  async () => {
-		await selCommand.switchToFrame()
+		let text = await selCommand.switchToFrame()
+		vscode.window.showInformationMessage(text);
+	});
+
+	vscode.commands.registerCommand('extension.switchToParentFrame',  async () => {
+		let text = await selCommand.switchToParentFrame()
+		vscode.window.showInformationMessage(text);
+	});
+
+	vscode.commands.registerCommand('extension.switchToDefaultContent',  async () => {
+		let text = await selCommand.switchToDefaultContent()
+		vscode.window.showInformationMessage(text);
 	});
 	
 	const pageViewProvider = new PageViewProvider(context);
@@ -267,4 +280,7 @@ export function activate(context: vscode.ExtensionContext) {
 
 	vscode.commands.registerCommand('pageView.refresh', () => pageViewProvider.refresh());
 
+	const provider = new DebuggerViewProvider(context.extensionUri);
+	vscode.window.registerWebviewViewProvider(DebuggerViewProvider.viewType, provider);
+	
 }

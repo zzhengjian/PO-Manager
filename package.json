@@ -44,6 +44,12 @@
 		"views": {
 			"explorer": [
 				{
+					"type": "webview",
+					"id": "selDebugger.debuggerView",
+					"name": "Debug View",
+					"when": "WebdriverEnabled"
+				},
+				{
 					"id": "jsonOutline",
 					"name": "Locators",
 					"when": "jsonOutlineEnabled"
@@ -220,6 +226,14 @@
 				"title": "switchToFrame"
 			},
 			{
+				"command": "extension.switchToParentFrame",
+				"title": "switchToParentFrame"
+			},
+			{
+				"command": "extension.switchToDefaultContent",
+				"title": "switchToDefaultContent"
+			},
+			{
 				"command": "pageView.refresh",
 				"title": "refresh",
 				"icon": {
@@ -297,6 +311,14 @@
 				},
 				{
 					"command": "extension.switchToFrame",
+					"when": "view =~ /jsonOutline|pageView/ && WebdriverEnabled"
+				},
+				{
+					"command": "extension.switchToParentFrame",
+					"when": "view =~ /jsonOutline|pageView/ && WebdriverEnabled"
+				},
+				{
+					"command": "extension.switchToDefaultContent",
 					"when": "view =~ /jsonOutline|pageView/ && WebdriverEnabled"
 				},
 				{
@@ -490,7 +512,7 @@
 		"@types/mkdirp": "^0.5.2",
 		"@types/node": "^12.12.0",
 		"@types/rimraf": "^2.0.2",
-		"@types/vscode": "^1.45.0",
+		"@types/vscode": "^1.50.0",
 		"@typescript-eslint/parser": "^4.16.0",
 		"eslint": "^7.21.0",
 		"typescript": "^4.2.2"
