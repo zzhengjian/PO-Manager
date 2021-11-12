@@ -34,6 +34,14 @@ export class SelCommand {
 		})
 	}
 
+	setParent(value: string): void {
+		this.parentLocator = value
+	}
+
+	getParent(): string {
+		return this.parentLocator
+	}
+
 	setParentLocator(): void {
 		vscode.window.showInputBox({ placeHolder: 'Enter Parent Locator' })
 		.then(value => {
@@ -79,20 +87,38 @@ export class SelCommand {
 	}
 
 	async switchToFrame(): Promise<string> {
-		await vscode.window.showInputBox({ placeHolder: 'Enter FrameId' })
+		let frameText = await vscode.window.showInputBox({ placeHolder: 'Enter frameId or css selector ' })
 		.then(async FrameId => {
+			let attrjs = `var attrs = [];
+					var el = window.frameElement;
+					for (var i = 0, atts = el.attributes, n = atts.length, arr = []; i < n; i++){
+						attrs.push(atts[i].nodeName + ': ' + atts[i].nodeValue)
+					}
+					return attrs.toLocaleString();`; 
 			if(typeof FrameId == 'number'){
-				await this.driver.switchTo().frame(FrameId)
+				await this.driver.switchTo().frame(FrameId) 
 			}
 			else{
 				let frame = await this.driver.findElement(By['css'](FrameId))
 				await this.driver.switchTo().frame(frame)
 			}
+			return await this.driver.executeScript(attrjs) 
 			
 		})
 
-		return "switch frame"
+		return "switch to frame: " + frameText
 	}
+
+	async switchToDefaultContent(): Promise<string> {
+		await this.driver.switchTo().defaultContent()
+		return "switch to default content"
+	}
+
+	async switchToParentFrame(): Promise<string> {
+		await this.driver.switchTo().parentFrame()
+		return "switch to parentFrame"
+	}
+
 
 	async switchToNextTab(): Promise<string> {
 		let curHandle = await this.driver.getWindowHandle()
@@ -285,7 +311,7 @@ export class SelCommand {
         return commands(this.driver)
 	}
 
-	async highlight(locator: any): Promise<string> {
+	async highlight(locator: any, isParent?: boolean): Promise<string> {
 		let _flasher = ["",""]
 
 		let js = `var flasher = [];
@@ -304,7 +330,10 @@ export class SelCommand {
 		try {
 			let by = this.getBy(locator)
 			let eleList = null; 
-			if(this.parentLocator){
+			if(isParent){
+				eleList = await this.driver.findElements(by)
+			}
+			else if(this.parentLocator){
 				eleList = await this.driver.findElement(this.getBy(this.parentLocator)).findElements(by)
 			}
 			else{
@@ -349,10 +378,30 @@ export class SelCommand {
 	}
 
 	getBy(locator: any): string {
+		if(typeof locator == "string" && locator.match(/^([A-Za-z]+)=.+/)){
+			let locatorObj = this.parse_locator(locator)
+			return By[locatorObj.type](locatorObj.locator)
+		}
 		if(typeof locator == "string"){
 			return By['css'](locator)
 		}
 		return By[locator.type](locator.locator)
 	}
 
+
+	parse_locator(locator) {
+		if (!locator) {
+		  throw new TypeError('Locator cannot be empty')
+		}
+		const result = locator.match(/^([A-Za-z]+)=.+/)
+		if (result) {
+		  let type = result[1]
+		  const length = type.length
+		  const actualLocator = locator.substring(length + 1)
+		  return { type: type, locator: actualLocator }
+		}
+		throw new Error(
+		  'Implicit locators are obsolete, please prepend the strategy (e.g. id=element).'
+		)
+	  }
 }

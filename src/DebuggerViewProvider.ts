@@ -3,14 +3,18 @@ import { SelCommand } from './SelCommand';
 
 export class DebuggerViewProvider implements vscode.WebviewViewProvider {
 
-	public static readonly viewType = 'selDebugger.debuggerView';
+	public static readonly viewType = 'selDebugger';
 	public static selCommand: SelCommand;
 	private _view?: vscode.WebviewView;
-	private locator: String;
+	private locator: string;
 
 	constructor(
 		private readonly _extensionUri: vscode.Uri
 	) { }
+
+	getLocator(){
+		return this.locator
+	}
 
 	public resolveWebviewView(
 		webviewView: vscode.WebviewView,
@@ -47,12 +51,18 @@ export class DebuggerViewProvider implements vscode.WebviewViewProvider {
 					}
 				case 'highlight':
 					{
-						await DebuggerViewProvider.selCommand.highlight(this.locator)
+						let text = await DebuggerViewProvider.selCommand.highlight(this.locator)
+						if(text) {
+							vscode.window.showInformationMessage(text);
+						}
 						break;
 					}
 				case 'highlightParent':
 					{
-						await DebuggerViewProvider.selCommand.highlight(DebuggerViewProvider.selCommand.getParent(), true)
+						let text = await DebuggerViewProvider.selCommand.highlight(DebuggerViewProvider.selCommand.getParent(), true)
+						if(text) {
+							vscode.window.showInformationMessage(text);
+						}
 						break;
 					}
 				case 'updateLocator':
@@ -72,14 +82,11 @@ export class DebuggerViewProvider implements vscode.WebviewViewProvider {
 	private _getHtmlForWebview(webview: vscode.Webview) {
 		// Get the local path to main script run in the webview, then convert it to a uri we can use in the webview.
 		const scriptUri = webview.asWebviewUri(vscode.Uri.joinPath(this._extensionUri, 'media', 'main.js'));
-
 		// Do the same for the stylesheet.
 		const styleResetUri = webview.asWebviewUri(vscode.Uri.joinPath(this._extensionUri, 'media', 'reset.css'));
 		const styleVSCodeUri = webview.asWebviewUri(vscode.Uri.joinPath(this._extensionUri, 'media', 'vscode.css'));
 		const styleMainUri = webview.asWebviewUri(vscode.Uri.joinPath(this._extensionUri, 'media', 'main.css'));
 
-		const selectIcon = webview.asWebviewUri(vscode.Uri.joinPath(this._extensionUri, 'media', 'select.png'));
-		const highlightIcon = webview.asWebviewUri(vscode.Uri.joinPath(this._extensionUri, 'media', 'highlight.png'));
 		// Use a nonce to only allow a specific script to be run.
 		const nonce = getNonce();
 
@@ -95,21 +102,19 @@ export class DebuggerViewProvider implements vscode.WebviewViewProvider {
 				<meta http-equiv="Content-Security-Policy" content="default-src 'none'; style-src ${webview.cspSource}; script-src 'nonce-${nonce}';">
 
 				<meta name="viewport" content="width=device-width, initial-scale=1.0">
-				<script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
 				<link href="${styleResetUri}" rel="stylesheet">
 				<link href="${styleVSCodeUri}" rel="stylesheet">
 				<link href="${styleMainUri}" rel="stylesheet">
-				
 				<title>Cat Colors</title>
 			</head>
 			<body>
 				<div class="parentLocatorArea">
-					<input class="locatorBox"> </input>
+					<input class="locatorBox" placeholder="enter parent locator here"> </input>
 					<button class="selectElement" title="select element">S</button>
 					<button class="highlight" title="highligh element">H</button>
 				</div>
 				<div class="locatorArea">
-					<input class="locatorBox"> </input>
+					<input class="locatorBox" placeholder="enter element locator here"> </input>
 					<button class="selectElement" title="select element">S</button>
 					<button class="highlight" title="highligh element">H</button>
 				</div>

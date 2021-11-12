@@ -45,7 +45,7 @@
 			"explorer": [
 				{
 					"type": "webview",
-					"id": "selDebugger.debuggerView",
+					"id": "selDebugger",
 					"name": "Debug View",
 					"when": "WebdriverEnabled"
 				},
@@ -256,6 +256,66 @@
 					"light": "resources/light/document.svg",
 					"dark": "resources/dark/document.svg"
 				}
+			},
+			{
+				"command": "debugView.getText",
+				"title": "getText"
+			},
+			{
+				"command": "debugView.getAttribute",
+				"title": "getAttribute"
+			},
+			{
+				"command": "debugView.getCssValue",
+				"title": "getCssValue"
+			},
+			{
+				"command": "debugView.getElementInfo",
+				"title": "getElementInfo"
+			},
+			{
+				"command": "debugView.showElement",
+				"title": "showElement"
+			},
+			{
+				"command": "debugView.hideElement",
+				"title": "hideElement"
+			},
+			{
+				"command": "debugView.click",
+				"title": "click"
+			},
+			{
+				"command": "debugView.isDisplayed",
+				"title": "isDisplayed"
+			},
+			{
+				"command": "debugView.isSelected",
+				"title": "isSelected"
+			},
+			{
+				"command": "debugView.isEnabled",
+				"title": "isEnabled"
+			},
+			{
+				"command": "debugView.jsClick",
+				"title": "jsClick"
+			},
+			{
+				"command": "debugView.clear",
+				"title": "clear"
+			},
+			{
+				"command": "debugView.hover",
+				"title": "mouseover"
+			},
+			{
+				"command": "debugView.jsHover",
+				"title": "jsHover"
+			},
+			{
+				"command": "debugView.sendKeys",
+				"title": "sendKeys"
 			}
 		],
 		"menus": {
@@ -345,6 +405,81 @@
 					"command": "pageView.refresh",
 					"when": "view == pageView",
 					"group": "navigation"
+				},
+				{
+					"command": "debugView.getText",
+					"when": "view == selDebugger && WebdriverEnabled ",
+					"group": "eleCommand"
+				},
+				{
+					"command": "debugView.getAttribute",
+					"when": "view == selDebugger && WebdriverEnabled ",
+					"group": "eleCommand"
+				},
+				{
+					"command": "debugView.getCssValue",
+					"when": "view == selDebugger && WebdriverEnabled ",
+					"group": "eleCommand"
+				},
+				{
+					"command": "debugView.showElement",
+					"when": "view == selDebugger && WebdriverEnabled ",
+					"group": "jsCommand"
+				},
+				{
+					"command": "debugView.hideElement",
+					"when": "view == selDebugger && WebdriverEnabled ",
+					"group": "jsCommand"
+				},
+				{
+					"command": "debugView.click",
+					"when": "view == selDebugger && WebdriverEnabled ",
+					"group": "eleCommand"
+				},
+				{
+					"command": "debugView.isDisplayed",
+					"when": "view == selDebugger && WebdriverEnabled ",
+					"group": "eleCommand"
+				},
+				{
+					"command": "debugView.isEnabled",
+					"when": "view == selDebugger && WebdriverEnabled ",
+					"group": "eleCommand"
+				},
+				{
+					"command": "debugView.isSelected",
+					"when": "view == selDebugger && WebdriverEnabled ",
+					"group": "eleCommand"
+				},
+				{
+					"command": "debugView.jsClick",
+					"when": "view == selDebugger && WebdriverEnabled ",
+					"group": "jsCommand"
+				},
+				{
+					"command": "debugView.clear",
+					"when": "view == selDebugger && WebdriverEnabled ",
+					"group": "eleCommand"
+				},
+				{
+					"command": "debugView.hover",
+					"when": "view == selDebugger && WebdriverEnabled ",
+					"group": "eleCommand"
+				},
+				{
+					"command": "debugView.jsHover",
+					"when": "view == selDebugger && WebdriverEnabled ",
+					"group": "jsCommand"
+				},
+				{
+					"command": "debugView.sendKeys",
+					"when": "view == selDebugger && WebdriverEnabled ",
+					"group": "eleCommand"
+				},
+				{
+					"command": "debugView.getElementInfo",
+					"when": "view == selDebugger && WebdriverEnabled ",
+					"group": "jsCommand"
 				}
 			],
 			"view/item/context": [
@@ -399,11 +534,6 @@
 					"group": "jsCommand"
 				},
 				{
-					"command": "extension.updateElement",
-					"when": "view == jsonOutline && ChromeEnabled && viewItem == element",
-					"group": "inline"
-				},
-				{
 					"command": "extension.clear",
 					"when": "view == jsonOutline && WebdriverEnabled && viewItem == element",
 					"group": "eleCommand"
@@ -427,6 +557,11 @@
 					"command": "extension.getElementInfo",
 					"when": "view == jsonOutline && WebdriverEnabled && viewItem == element",
 					"group": "jsCommand"
+				},
+				{
+					"command": "extension.updateElement",
+					"when": "view == jsonOutline && ChromeEnabled && viewItem == element",
+					"group": "inline"
 				},
 				{
 					"command": "extension.highlight",

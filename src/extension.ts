@@ -280,7 +280,88 @@ export function activate(context: vscode.ExtensionContext) {
 
 	vscode.commands.registerCommand('pageView.refresh', () => pageViewProvider.refresh());
 
-	const provider = new DebuggerViewProvider(context.extensionUri);
-	vscode.window.registerWebviewViewProvider(DebuggerViewProvider.viewType, provider);
-	
+	const webViewProvider = new DebuggerViewProvider(context.extensionUri);
+	vscode.window.registerWebviewViewProvider(DebuggerViewProvider.viewType, webViewProvider);
+	vscode.commands.registerCommand('debugView.isDisplayed', async () => {
+		let locator = webViewProvider.getLocator()
+		let text = await selCommand.isDisplayed(locator)
+		vscode.window.showInformationMessage(text);
+	});
+
+	vscode.commands.registerCommand('debugView.isEnabled', async () => {
+		let locator = webViewProvider.getLocator()
+		let text = await selCommand.isEnabled(locator)
+		vscode.window.showInformationMessage(text);
+	});
+
+	vscode.commands.registerCommand('debugView.isSelected', async () => {
+		let locator = webViewProvider.getLocator()
+		let text = await selCommand.isSelected(locator)
+		vscode.window.showInformationMessage(text);
+	});
+
+	vscode.commands.registerCommand('debugView.getText', async () => {
+		let locator = webViewProvider.getLocator()
+		let text = await selCommand.getText(locator)
+		vscode.window.showInformationMessage(text);
+	});
+
+	vscode.commands.registerCommand('debugView.getAttribute', async () => {
+		let locator = webViewProvider.getLocator()
+		let text = await selCommand.getAttribute(locator)
+		vscode.window.showInformationMessage(text);
+	});
+
+	vscode.commands.registerCommand('debugView.getCssValue', async () => {
+		let locator = webViewProvider.getLocator()
+		let text = await selCommand.getCssValue(locator)
+		vscode.window.showInformationMessage(text);
+	});
+
+	vscode.commands.registerCommand('debugView.getElementInfo', async () => {
+		let locator = webViewProvider.getLocator()
+		let text = await selCommand.getElementInfo(locator)
+		vscode.window.showInformationMessage(text);
+	});
+	vscode.commands.registerCommand('debugView.hideElement', async () => {
+		let locator = webViewProvider.getLocator()
+		let text = await selCommand.hideElement(locator)
+		vscode.window.showInformationMessage(text);
+	});
+	vscode.commands.registerCommand('debugView.showElement', async () => {
+		let locator = webViewProvider.getLocator()
+		let text = await selCommand.showElement(locator)
+		vscode.window.showInformationMessage(text);
+	});
+	vscode.commands.registerCommand('debugView.click', async () => {
+		let locator = webViewProvider.getLocator()
+		let text = await selCommand.click(locator)
+		vscode.window.showInformationMessage(text);
+	});
+	vscode.commands.registerCommand('debugView.jsClick', async () => {
+		let locator = webViewProvider.getLocator()
+		let text = await selCommand.jsClick(locator)
+		vscode.window.showInformationMessage(text);
+	});
+	vscode.commands.registerCommand('debugView.clear', async () => {
+		let locator = webViewProvider.getLocator()
+		let text = await selCommand.clear(locator)
+		vscode.window.showInformationMessage(text);
+	});
+	vscode.commands.registerCommand('debugView.sendKeys',  async () => {
+		let locator = webViewProvider.getLocator()
+		let text = await selCommand.sendKeys(locator)
+		vscode.window.showInformationMessage(text);
+	});
+
+	vscode.commands.registerCommand('debugView.hover', async () => {
+		let locator = webViewProvider.getLocator()
+		let text = await selCommand.hover(locator)
+		vscode.window.showInformationMessage(text);
+	});
+	vscode.commands.registerCommand('debugView.jsHover', async () => {
+		let locator = webViewProvider.getLocator()
+		let text = await selCommand.jsHover(locator)
+		vscode.window.showInformationMessage(text);
+	});
 }

@@ -10,7 +10,7 @@
         vscode.postMessage({ type: 'selectElement'});
     });
 
-    document.querySelector('.locatorArea > input.locatorBox').addEventListener('onchange', () => {
+    document.querySelector('.locatorArea > .locatorBox').addEventListener('input', () => {
         // @ts-ignore
         vscode.postMessage({ type: 'updateLocator', value: document.querySelector('.locatorArea > input.locatorBox').value});
     });
@@ -23,12 +23,12 @@
         vscode.postMessage({ type: 'selectParentElement'});
     });
 
-    document.querySelector('.parentLocatorArea > input.locatorBox').addEventListener('onchange', () => {
+    document.querySelector('.parentLocatorArea > .locatorBox').addEventListener('input', () => {
         // @ts-ignore
         vscode.postMessage({ type: 'updateParentLocator', value: document.querySelector('.parentLocatorArea > input.locatorBox').value});
     });
 
-    document.querySelector('.parentLocatorArea  .highlight').addEventListener('click', () => {
+    document.querySelector('.parentLocatorArea .highlight').addEventListener('click', () => {
         vscode.postMessage({ type: 'highlightParent'});
     });
 
