@@ -40,7 +40,7 @@ body {
 }
 
 .parentLocatorArea {
-	display: flex;
+	display: none;
 	flex-direction: row;
 }
 
@@ -51,8 +51,21 @@ body {
 
 .selectElement {
 	width: 20px;
+	background-color: transparent;
 }
 
 .highlight {
 	width: 20px;
+	background-color: transparent;
+}
+
+.expendArrow {
+	width: 20px;
+	background-color: transparent;
+}
+
+.parentLocatorArea .expendArrow {
+	width: 20px;
+	background-color: transparent;
+	color: transparent;
 }

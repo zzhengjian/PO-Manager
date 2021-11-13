@@ -198,18 +198,6 @@
 				"title": "getCurrentUrl"
 			},
 			{
-				"command": "extension.selectParentLocator",
-				"title": "selectParentLocator"
-			},
-			{
-				"command": "extension.setParentLocator",
-				"title": "setParentLocator"
-			},
-			{
-				"command": "extension.clearParentLocator",
-				"title": "clearParentLocator"
-			},
-			{
 				"command": "extension.closeTab",
 				"title": "closeTab"
 			},
@@ -345,21 +333,6 @@
 				{
 					"command": "extension.getCurrentUrl",
 					"when": "view =~ /jsonOutline|pageView/ && WebdriverEnabled"
-				},
-				{
-					"command": "extension.selectParentLocator",
-					"when": "view =~ /jsonOutline|pageView/ && WebdriverEnabled && enableParentLocator",
-					"group": "parentLocator"
-				},
-				{
-					"command": "extension.setParentLocator",
-					"when": "view =~ /jsonOutline|pageView/ && WebdriverEnabled && enableParentLocator",
-					"group": "parentLocator"
-				},
-				{
-					"command": "extension.clearParentLocator",
-					"when": "view =~ /jsonOutline|pageView/ && WebdriverEnabled && enableParentLocator",
-					"group": "parentLocator"
 				},
 				{
 					"command": "extension.switchToMainTab",
@@ -588,10 +561,6 @@
 						"type": "boolean",
 						"default": true
 					},
-					"jsonOutline.enableParentLocator": {
-						"type": "boolean",
-						"default": false
-					},
 					"jsonOutline.browsers": {
 						"type": "string",
 						"scope": "application",
@@ -658,6 +627,7 @@
 		"selenium-webdriver": "4.0.0",
 		"shush": "^1.0.0",
 		"json-format": "1.0.1",
+		"@vscode/codicons": "0.0.20",
 		"engine.io": "^3.4.0"
 	}
 }

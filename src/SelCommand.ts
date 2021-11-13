@@ -5,33 +5,18 @@ export class SelCommand {
 
 	private driver: WebDriver;
 	private parentLocator: string;
-	private enableParentLocator: boolean;
 	private pascalCase: any;
 	private preserveConsecutiveUppercase: any;
 	
 	constructor(driver: WebDriver) {
 		this.driver = driver
 		this.parentLocator = ""
-		this.enableParentLocator = vscode.workspace.getConfiguration('jsonOutline').get('enableParentLocator')
 		this.pascalCase = vscode.workspace.getConfiguration('jsonOutline').get('pascalCase')
 		this.preserveConsecutiveUppercase = vscode.workspace.getConfiguration('jsonOutline').get('preserveConsecutiveUppercase')
 		vscode.workspace.onDidChangeConfiguration(() => {
-			this.enableParentLocator = vscode.workspace.getConfiguration('jsonOutline').get('enableParentLocator');
-			vscode.commands.executeCommand('setContext', 'enableParentLocator', this.enableParentLocator);
 			this.pascalCase = vscode.workspace.getConfiguration('jsonOutline').get('pascalCase');
 			this.preserveConsecutiveUppercase = vscode.workspace.getConfiguration('jsonOutline').get('preserveConsecutiveUppercase')
 		});
-		vscode.commands.executeCommand('setContext', 'enableParentLocator', this.enableParentLocator);
-	}
-
-	async selectParentLocator(): Promise<void> {
-		await this.showBrowser()
-		this.driver.executeAsyncScript(`var callback = arguments[arguments.length - 1]; 
-												window.__side.selectElement(callback);`)
-			.then(value => {
-			this.parentLocator = value
-			vscode.window.showInformationMessage(this.parentLocator);
-		})
 	}
 
 	setParent(value: string): void {
@@ -40,18 +25,6 @@ export class SelCommand {
 
 	getParent(): string {
 		return this.parentLocator
-	}
-
-	setParentLocator(): void {
-		vscode.window.showInputBox({ placeHolder: 'Enter Parent Locator' })
-		.then(value => {
-			this.parentLocator = value
-			vscode.window.showInformationMessage(this.parentLocator);
-		})
-	}
-	clearParentLocator(): void {
-		this.parentLocator = ""
-		vscode.window.showInformationMessage("parent locator: " + this.parentLocator);
 	}
 
 	async getCurrentUrl(): Promise<string> {

@@ -228,15 +228,6 @@ export function activate(context: vscode.ExtensionContext) {
 	vscode.commands.registerCommand('extension.runBatchScript',  async () => {
 		await selCommand.runJsScript()
 	});
-	vscode.commands.registerCommand('extension.selectParentLocator',  async () => {
-		selCommand.selectParentLocator()
-	});
-	vscode.commands.registerCommand('extension.setParentLocator',  async () => {
-		selCommand.setParentLocator()
-	});
-	vscode.commands.registerCommand('extension.clearParentLocator',  async () => {
-		selCommand.clearParentLocator()
-	});
 	vscode.commands.registerCommand('extension.closeTab',  async () => {
 		await selCommand.closeTab()
 	});

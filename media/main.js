@@ -6,6 +6,26 @@
     // @ts-ignore
     const vscode = acquireVsCodeApi();
 
+    document.querySelector('.locatorArea .expendArrow').addEventListener('click', () => {
+        let ele = document.querySelector('.locatorArea .expendArrow .codicon')
+        if(ele.classList.contains("codicon-fold-up")){
+            // @ts-ignore
+            document.querySelector('.parentLocatorArea').style.display = "flex"
+            ele.classList.remove("codicon-fold-up")
+            ele.classList.add("codicon-fold")
+            // @ts-ignore
+            vscode.postMessage({ type: 'updateParentLocator', value: document.querySelector('.parentLocatorArea > input.locatorBox').value});
+        }
+        else{
+            // @ts-ignore
+            document.querySelector('.parentLocatorArea').style.display = "none"
+            ele.classList.remove("codicon-fold")
+            ele.classList.add("codicon-fold-up")
+            vscode.postMessage({ type: 'updateParentLocator', value: ""});
+        }
+
+    });
+
     document.querySelector('.locatorArea .selectElement').addEventListener('click', () => {
         vscode.postMessage({ type: 'selectElement'});
     });
