@@ -2,6 +2,8 @@
 v0.1.15
 
 * Fix issue #3：Element in frame is not able to select
+* Add DebugView for element selectors
+* Move parentLocator to debugView
 
 v0.1.14
 

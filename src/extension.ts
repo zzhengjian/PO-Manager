@@ -12,16 +12,16 @@ const engine = require('engine.io');
 
 
 let driver = null, selCommand:SelCommand = null, server, extSocket
-let browser = vscode.workspace.getConfiguration('jsonOutline').get('browsers')
+let browser = vscode.workspace.getConfiguration('browsers').get('browser')
 vscode.commands.executeCommand('setContext', 'BrowserName', browser);
 vscode.workspace.onDidChangeConfiguration(() => {
-	browser = vscode.workspace.getConfiguration('jsonOutline').get('browsers');
+	browser = vscode.workspace.getConfiguration('browsers').get('browser');
 	vscode.commands.executeCommand('setContext', 'BrowserName', browser);
 });
 export function activate(context: vscode.ExtensionContext) {
 	const jsonOutlineProvider = new JsonOutlineProvider(context);
-	vscode.window.registerTreeDataProvider('jsonOutline', jsonOutlineProvider);
-	vscode.commands.registerCommand('jsonOutline.refresh', () => jsonOutlineProvider.refresh());
+	vscode.window.registerTreeDataProvider('locators', jsonOutlineProvider);
+	vscode.commands.registerCommand('locators.refresh', () => jsonOutlineProvider.refresh());
 	vscode.commands.registerCommand('extension.openJsonSelection', range => jsonOutlineProvider.select(range));
 	
 	vscode.commands.registerCommand('pageView.startChrome', startDriver);

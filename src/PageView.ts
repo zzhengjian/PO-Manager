@@ -9,14 +9,14 @@ export class PageViewProvider implements vscode.TreeDataProvider<View> {
 	private _onDidChangeTreeData: vscode.EventEmitter<View | null> = new vscode.EventEmitter<View | null>();
 	readonly onDidChangeTreeData: vscode.Event<View | null> = this._onDidChangeTreeData.event;
 	private views: any;
-	public  locatorDir = path.join(vscode.workspace.workspaceFolders[0].uri.fsPath, vscode.workspace.getConfiguration('jsonOutline').get('locatorFolder'))
+	public  locatorDir = path.join(vscode.workspace.workspaceFolders[0].uri.fsPath, vscode.workspace.getConfiguration('pageView').get('locatorFolder'))
 	public  elementCommands: string[] = vscode.workspace.getConfiguration('pageView').get('elementCommands')
 	public  elementNameResolver: string = vscode.workspace.getConfiguration('pageView').get('elementNameResolver')
 	
 	constructor(private context: vscode.ExtensionContext) {
 		this.views = this.getViews();
 		vscode.workspace.onDidChangeConfiguration(() => {
-			this.locatorDir = path.join(vscode.workspace.workspaceFolders[0].uri.fsPath, vscode.workspace.getConfiguration('jsonOutline').get('locatorFolder'))
+			this.locatorDir = path.join(vscode.workspace.workspaceFolders[0].uri.fsPath, vscode.workspace.getConfiguration('pageView').get('locatorFolder'))
 			this.elementCommands = vscode.workspace.getConfiguration('pageView').get('elementCommands')
 			this.elementNameResolver = vscode.workspace.getConfiguration('pageView').get('elementNameResolver')
 			this.refresh()

@@ -11,11 +11,11 @@ export class SelCommand {
 	constructor(driver: WebDriver) {
 		this.driver = driver
 		this.parentLocator = ""
-		this.pascalCase = vscode.workspace.getConfiguration('jsonOutline').get('pascalCase')
-		this.preserveConsecutiveUppercase = vscode.workspace.getConfiguration('jsonOutline').get('preserveConsecutiveUppercase')
+		this.pascalCase = vscode.workspace.getConfiguration('locators').get('pascalCase')
+		this.preserveConsecutiveUppercase = vscode.workspace.getConfiguration('locators').get('preserveConsecutiveUppercase')
 		vscode.workspace.onDidChangeConfiguration(() => {
-			this.pascalCase = vscode.workspace.getConfiguration('jsonOutline').get('pascalCase');
-			this.preserveConsecutiveUppercase = vscode.workspace.getConfiguration('jsonOutline').get('preserveConsecutiveUppercase')
+			this.pascalCase = vscode.workspace.getConfiguration('locators').get('pascalCase');
+			this.preserveConsecutiveUppercase = vscode.workspace.getConfiguration('locators').get('preserveConsecutiveUppercase')
 		});
 	}
 

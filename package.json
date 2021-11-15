@@ -50,7 +50,7 @@
 					"when": "WebdriverEnabled"
 				},
 				{
-					"id": "jsonOutline",
+					"id": "locators",
 					"name": "Locators",
 					"when": "jsonOutlineEnabled"
 				},
@@ -62,7 +62,7 @@
 		},
 		"commands": [
 			{
-				"command": "jsonOutline.refresh",
+				"command": "locators.refresh",
 				"title": "Refresh",
 				"icon": {
 					"light": "resources/light/refresh.svg",
@@ -326,52 +326,52 @@
 			],
 			"view/title": [
 				{
-					"command": "jsonOutline.refresh",
-					"when": "view == jsonOutline",
+					"command": "locators.refresh",
+					"when": "view == locators",
 					"group": "navigation"
 				},
 				{
 					"command": "extension.getCurrentUrl",
-					"when": "view =~ /jsonOutline|pageView/ && WebdriverEnabled"
+					"when": "view =~ /locators|pageView/ && WebdriverEnabled"
 				},
 				{
 					"command": "extension.switchToMainTab",
-					"when": "view =~ /jsonOutline|pageView/ && WebdriverEnabled"
+					"when": "view =~ /locators|pageView/ && WebdriverEnabled"
 				},
 				{
 					"command": "extension.switchToNextTab",
-					"when": "view =~ /jsonOutline|pageView/ && WebdriverEnabled"
+					"when": "view =~ /locators|pageView/ && WebdriverEnabled"
 				},
 				{
 					"command": "extension.switchToFrame",
-					"when": "view =~ /jsonOutline|pageView/ && WebdriverEnabled"
+					"when": "view =~ /locators|pageView/ && WebdriverEnabled"
 				},
 				{
 					"command": "extension.switchToParentFrame",
-					"when": "view =~ /jsonOutline|pageView/ && WebdriverEnabled"
+					"when": "view =~ /locators|pageView/ && WebdriverEnabled"
 				},
 				{
 					"command": "extension.switchToDefaultContent",
-					"when": "view =~ /jsonOutline|pageView/ && WebdriverEnabled"
+					"when": "view =~ /locators|pageView/ && WebdriverEnabled"
 				},
 				{
 					"command": "pageView.stopDriver",
-					"when": "view =~ /jsonOutline|pageView/ && WebdriverEnabled",
+					"when": "view =~ /locators|pageView/ && WebdriverEnabled",
 					"group": "navigation"
 				},
 				{
 					"command": "pageView.startChrome",
-					"when": "view =~ /jsonOutline|pageView/ && BrowserName == Chrome",
+					"when": "view =~ /locators|pageView/ && BrowserName == Chrome",
 					"group": "navigation"
 				},
 				{
 					"command": "pageView.startFirefox",
-					"when": "view =~ /jsonOutline|pageView/ && BrowserName == Firefox",
+					"when": "view =~ /locators|pageView/ && BrowserName == Firefox",
 					"group": "navigation"
 				},
 				{
 					"command": "pageView.startEdge",
-					"when": "view =~ /jsonOutline|pageView/ && BrowserName == Edge",
+					"when": "view =~ /locators|pageView/ && BrowserName == Edge",
 					"group": "navigation"
 				},
 				{
@@ -458,87 +458,87 @@
 			"view/item/context": [
 				{
 					"command": "extension.getText",
-					"when": "view == jsonOutline && WebdriverEnabled && viewItem == element",
+					"when": "view == locators && WebdriverEnabled && viewItem == element",
 					"group": "eleCommand"
 				},
 				{
 					"command": "extension.getAttribute",
-					"when": "view == jsonOutline && WebdriverEnabled && viewItem == element",
+					"when": "view == locators && WebdriverEnabled && viewItem == element",
 					"group": "eleCommand"
 				},
 				{
 					"command": "extension.getCssValue",
-					"when": "view == jsonOutline && WebdriverEnabled && viewItem == element",
+					"when": "view == locators && WebdriverEnabled && viewItem == element",
 					"group": "eleCommand"
 				},
 				{
 					"command": "extension.showElement",
-					"when": "view == jsonOutline && WebdriverEnabled && viewItem == element",
+					"when": "view == locators && WebdriverEnabled && viewItem == element",
 					"group": "jsCommand"
 				},
 				{
 					"command": "extension.hideElement",
-					"when": "view == jsonOutline && WebdriverEnabled && viewItem == element",
+					"when": "view == locators && WebdriverEnabled && viewItem == element",
 					"group": "jsCommand"
 				},
 				{
 					"command": "extension.click",
-					"when": "view == jsonOutline && WebdriverEnabled && viewItem == element",
+					"when": "view == locators && WebdriverEnabled && viewItem == element",
 					"group": "eleCommand"
 				},
 				{
 					"command": "extension.isDisplayed",
-					"when": "view == jsonOutline && WebdriverEnabled && viewItem == element",
+					"when": "view == locators && WebdriverEnabled && viewItem == element",
 					"group": "eleCommand"
 				},
 				{
 					"command": "extension.isEnabled",
-					"when": "view == jsonOutline && WebdriverEnabled && viewItem == element",
+					"when": "view == locators && WebdriverEnabled && viewItem == element",
 					"group": "eleCommand"
 				},
 				{
 					"command": "extension.isSelected",
-					"when": "view == jsonOutline && WebdriverEnabled && viewItem == element",
+					"when": "view == locators && WebdriverEnabled && viewItem == element",
 					"group": "eleCommand"
 				},
 				{
 					"command": "extension.jsClick",
-					"when": "view == jsonOutline && WebdriverEnabled && viewItem == element",
+					"when": "view == locators && WebdriverEnabled && viewItem == element",
 					"group": "jsCommand"
 				},
 				{
 					"command": "extension.clear",
-					"when": "view == jsonOutline && WebdriverEnabled && viewItem == element",
+					"when": "view == locators && WebdriverEnabled && viewItem == element",
 					"group": "eleCommand"
 				},
 				{
 					"command": "extension.hover",
-					"when": "view == jsonOutline && WebdriverEnabled && viewItem == element",
+					"when": "view == locators && WebdriverEnabled && viewItem == element",
 					"group": "eleCommand"
 				},
 				{
 					"command": "extension.jsHover",
-					"when": "view == jsonOutline && WebdriverEnabled && viewItem == element",
+					"when": "view == locators && WebdriverEnabled && viewItem == element",
 					"group": "jsCommand"
 				},
 				{
 					"command": "extension.sendKeys",
-					"when": "view == jsonOutline && WebdriverEnabled && viewItem == element",
+					"when": "view == locators && WebdriverEnabled && viewItem == element",
 					"group": "eleCommand"
 				},
 				{
 					"command": "extension.getElementInfo",
-					"when": "view == jsonOutline && WebdriverEnabled && viewItem == element",
+					"when": "view == locators && WebdriverEnabled && viewItem == element",
 					"group": "jsCommand"
 				},
 				{
 					"command": "extension.updateElement",
-					"when": "view == jsonOutline && ChromeEnabled && viewItem == element",
+					"when": "view == locators && ChromeEnabled && viewItem == element",
 					"group": "inline"
 				},
 				{
 					"command": "extension.highlight",
-					"when": "view == jsonOutline && WebdriverEnabled && viewItem == element",
+					"when": "view == locators && WebdriverEnabled && viewItem == element",
 					"group": "inline"
 				},
 				{
@@ -557,11 +557,7 @@
 			{
 				"title": "PO-Manager",
 				"properties": {
-					"jsonOutline.autorefresh": {
-						"type": "boolean",
-						"default": true
-					},
-					"jsonOutline.browsers": {
+					"browsers.browser": {
 						"type": "string",
 						"scope": "application",
 						"description": "choose browsers to work on",
@@ -572,23 +568,28 @@
 							"Edge"
 						]
 					},
-					"jsonOutline.locatorFolder": {
-						"type": "string",
-						"scope": "application",
-						"description": "The path of the folder to store the json locator files.",
-						"default": "tests/functional/locator"
+					"locators.autorefresh": {
+						"type": "boolean",
+						"default": true
 					},
-					"jsonOutline.pascalCase": {
+
+					"locators.pascalCase": {
 						"type": "boolean",
 						"scope": "application",
 						"description": "set true to convert foo-Bar => FooBar",
 						"default": true
 					},
-					"jsonOutline.preserveConsecutiveUppercase": {
+					"locators.preserveConsecutiveUppercase": {
 						"type": "boolean",
 						"scope": "application",
 						"description": "set true to preserveConsecutiveUppercase  Foo-BAR => FooBAR",
 						"default": true
+					},
+					"pageView.locatorFolder": {
+						"type": "string",
+						"scope": "application",
+						"description": "The path of the folder to store the json locator files.",
+						"default": "tests/functional/locator"
 					},
 					"pageView.elementCommands": {
 						"type": "array",
