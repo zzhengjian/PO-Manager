@@ -572,7 +572,6 @@
 						"type": "boolean",
 						"default": true
 					},
-
 					"locators.pascalCase": {
 						"type": "boolean",
 						"scope": "application",
@@ -619,7 +618,6 @@
 		"@types/rimraf": "^2.0.2",
 		"@types/vscode": "^1.50.0",
 		"@typescript-eslint/parser": "^4.16.0",
-		"eslint": "^7.21.0",
 		"typescript": "^4.2.2"
 	},
 	"dependencies": {
