@@ -238,11 +238,19 @@
 				}
 			},
 			{
+				"command": "pageView.copy",
+				"title": "copy elementPath",
+				"icon": {
+					"light": "resources/light/copy.png",
+					"dark": "resources/dark/copy.png"
+				}
+			},
+			{
 				"command": "pageView.openFile",
 				"title": "Open File",
 				"icon": {
-					"light": "resources/light/document.svg",
-					"dark": "resources/dark/document.svg"
+					"light": "resources/light/openFile.png",
+					"dark": "resources/dark/openFile.png"
 				}
 			},
 			{
@@ -549,6 +557,11 @@
 				{
 					"command": "pageView.openFile",
 					"when": "view == pageView && viewItem == file",
+					"group": "inline"
+				},
+				{
+					"command": "pageView.copy",
+					"when": "view == pageView && viewItem == element || viewItem == file",
 					"group": "inline"
 				}
 			]
