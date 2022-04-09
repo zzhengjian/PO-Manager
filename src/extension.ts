@@ -2,13 +2,13 @@
 
 import * as vscode from 'vscode';
 import * as path from 'path';
+import * as clipboardy from 'clipboardy';
 
 import { JsonOutlineProvider } from './jsonOutline';
 import {SelCommand} from './SelCommand'
 import { Builder, By, Browser} from 'selenium-webdriver';
 import { PageViewProvider } from './PageView';
 import { DebuggerViewProvider } from './DebuggerViewProvider';
-const engine = require('engine.io');
 
 
 let driver = null, selCommand:SelCommand = null, server, extSocket
@@ -259,6 +259,10 @@ export function activate(context: vscode.ExtensionContext) {
 		if(text) {
 			vscode.window.showInformationMessage(text);
 		}
+	});
+
+	vscode.commands.registerCommand('pageView.copy', async node => {
+		clipboardy.writeSync(node.viewPath)
 	});
 
 	vscode.commands.registerCommand('pageView.codeGen', async viewPath => {

@@ -51,7 +51,6 @@ export class PageViewProvider implements vscode.TreeDataProvider<View> {
 	getChildren(node?: View): Thenable<View[]> {
 		if(node){
 			if(node.contextValue == 'element'){
-
 				let elementCommands = []
 				elementCommands = this.elementCommands
 				if(!elementCommands || elementCommands.length<=0){
@@ -92,6 +91,10 @@ export class PageViewProvider implements vscode.TreeDataProvider<View> {
 					
 					if(node.contextValue == 'file'){
 						view.contextValue = 'element'
+						view.iconPath = {
+							light: this.context.asAbsolutePath(path.join('resources', 'light', 'element.png')),
+							dark: this.context.asAbsolutePath(path.join('resources', 'dark', 'element.png'))
+						}
 					}
 					
 					return view
