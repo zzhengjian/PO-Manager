@@ -39,7 +39,7 @@ export function activate(context: vscode.ExtensionContext) {
 						'goog:chromeOptions': {
 						// Don't set it to headless as extensions dont work in general
 						// when used in headless mode
-						args: [`load-extension=${path.join(__dirname + '../../build')}`],
+						args: [`load-extension=${path.join(__dirname + '../../build')}`, "ignore-certificate-errors"],
 						},
 					})
 					driver = await builder.build()
@@ -275,7 +275,7 @@ export function activate(context: vscode.ExtensionContext) {
 
 	vscode.commands.registerCommand('pageView.refresh', () => pageViewProvider.refresh());
 
-	const webViewProvider = new DebuggerViewProvider(context.extensionUri);
+	const webViewProvider = new DebuggerViewProvider(context);
 	vscode.window.registerWebviewViewProvider(DebuggerViewProvider.viewType, webViewProvider);
 	vscode.commands.registerCommand('debugView.isDisplayed', async () => {
 		let locator = webViewProvider.getLocator()

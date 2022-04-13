@@ -6,14 +6,31 @@ export class DebuggerViewProvider implements vscode.WebviewViewProvider {
 	public static readonly viewType = 'selDebugger';
 	public static selCommand: SelCommand;
 	private _view?: vscode.WebviewView;
-	private locator: string;
+	public locator: string;
+	public parentLocator: string;
+	private _extensionUri: any;
 
-	constructor(
-		private readonly _extensionUri: vscode.Uri
-	) { }
+	constructor(private context: vscode.ExtensionContext) {
+		this._extensionUri = this.context.extensionUri
 
-	getLocator(){
-		return this.locator
+	}
+
+	getLocator(): string{
+		return this.context.workspaceState.get("locator")
+	}
+
+	setLocator(locator: string){
+		this.locator = locator
+		this.context.workspaceState.update("locator", this.locator)
+	}
+
+	getParentLocator(){
+		return this.context.workspaceState.get("parentLocator")
+	}
+
+	setParentLocator(parentLocator: string){
+		this.parentLocator = parentLocator
+		this.context.workspaceState.get("parentLocator", this.parentLocator)
 	}
 
 	public resolveWebviewView(
@@ -38,15 +55,15 @@ export class DebuggerViewProvider implements vscode.WebviewViewProvider {
 			switch (data.type) {
 				case 'selectElement':
 					{
-						this.locator = await DebuggerViewProvider.selCommand.selectElement()
+						this.setLocator(await DebuggerViewProvider.selCommand.selectElement())
 						this._view.webview.postMessage({ type: 'selectElement', value: this.locator });
 						break;
 					}
 				case 'selectParentElement':
 					{
-						let parentLocator = await DebuggerViewProvider.selCommand.selectElement()
-						DebuggerViewProvider.selCommand.setParent(parentLocator)
-						this._view.webview.postMessage({ type: 'selectParentElement', value: parentLocator });
+						this.setParentLocator(await DebuggerViewProvider.selCommand.selectElement())
+						DebuggerViewProvider.selCommand.setParent(this.parentLocator)
+						this._view.webview.postMessage({ type: 'selectParentElement', value: this.parentLocator });
 						break;
 					}
 				case 'highlight':
@@ -67,7 +84,7 @@ export class DebuggerViewProvider implements vscode.WebviewViewProvider {
 					}
 				case 'updateLocator':
 					{
-						this.locator = data.value
+						this.setLocator(data.value)
 						break;
 					}
 				case 'updateParentLocator':
@@ -115,7 +132,7 @@ export class DebuggerViewProvider implements vscode.WebviewViewProvider {
 					<button class="expendArrow">
 						<i class="codicon codicon-fold-up"></i> 
 					</button>
-					<input class="locatorBox" placeholder="enter parent locator here"> </input>
+					<input class="locatorBox" placeholder="enter parent locator here" value="${this.getParentLocator() || ""}">  </input>
 					<button class="selectElement" title="select element">
 						<i class="codicon codicon-search"></i>
 					</button>
@@ -127,7 +144,7 @@ export class DebuggerViewProvider implements vscode.WebviewViewProvider {
 					<button class="expendArrow">
 						<i class="codicon codicon-fold-up"></i> 
 					</button>
-					<input class="locatorBox" placeholder="enter element locator here"> </input>
+					<input class="locatorBox" placeholder="enter element locator here" value="${this.getLocator() || ""}">  </input>
 					<button class="selectElement" title="select element">
 						<i class="codicon codicon-search"></i>
 					</button>

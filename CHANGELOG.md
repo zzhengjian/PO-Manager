@@ -1,3 +1,7 @@
+v0.1.16
+* support to copy elementPath in the page view
+* add icon to the element node
+* change the open file icon
 
 v0.1.15
 
