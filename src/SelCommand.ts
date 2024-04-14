@@ -1,4 +1,4 @@
-import { Builder, By, WebDriver, WebElement} from 'selenium-webdriver';
+import { Builder, By, Locator, WebDriver, WebElement} from 'selenium-webdriver';
 import * as vscode from 'vscode';
 
 export class SelCommand {
@@ -207,7 +207,7 @@ export class SelCommand {
 		return this.driver.executeAsyncScript(`var callback = arguments[arguments.length - 1]; 
 												window.__side.selectElement(callback);`)
 					.then(value => {
-						return value
+						return value as string
 					})
 	}
 
@@ -217,7 +217,7 @@ export class SelCommand {
 		return this.driver.executeAsyncScript(`var callback = arguments[arguments.length - 1]; 
 												window.__side.generateElement(callback, arguments[0]);`, options)
 					.then(value => {
-						return value
+						return value as string
 					})
 	}
 
@@ -227,7 +227,7 @@ export class SelCommand {
 		return this.driver.executeAsyncScript(`var callback = arguments[arguments.length - 1]; 
 												window.__side.generateElements(callback, arguments[0]);`, options)
 					.then(value => {
-						return value
+						return value as string
 					})
 	}
 
@@ -236,14 +236,14 @@ export class SelCommand {
 		return this.driver.executeAsyncScript(`var callback = arguments[arguments.length - 1]; 
 												window.__side.generateAllElements(callback, arguments[0]);`, options)
 					.then(value => {
-						return value
+						return value as string
 					})
 	}
 
 	async hover(locator: string): Promise<string>  {
 		await this.showBrowser()
 		let ele = await this.find(locator)
-		await this.driver.actions().mouseMove(ele).perform()
+		await this.driver.actions().move({origin: ele}).perform()
 		return "hover on element for: "+ this.getBy(locator)
 	}
 
@@ -268,7 +268,7 @@ export class SelCommand {
 		eleInfo += "isEnabled: " + await ele.isEnabled() + "\n"
 		eleInfo += "isSelected: " + await ele.isSelected() + "\n"
 		eleInfo += "Text: " + await ele.getText() + "\n"
-		let attrs = await this.driver.executeScript(js, ele);
+		let attrs: any[] = await this.driver.executeScript(js, ele);
 		for(let attr of attrs){
 			eleInfo += attr + "\n"
 		}
@@ -301,7 +301,7 @@ export class SelCommand {
 						arguments[0].style.background = '${_flasher[1]}';
 						return flasher;`
 		try {
-			let by = this.getBy(locator)
+			let by: Locator = this.getBy(locator)
 			let eleList = null; 
 			if(isParent){
 				eleList = await this.driver.findElements(by)
@@ -343,14 +343,14 @@ export class SelCommand {
 	}
 	
 
-	async find(locator: string): WebElement {
+	async find(locator: string): Promise<WebElement> {
 		if(!this.parentLocator){
 			return this.driver.findElement(this.getBy(locator))
 		}
 		return this.driver.findElement(this.getBy(this.parentLocator)).findElement(this.getBy(locator))
 	}
 
-	getBy(locator: any): string {
+	getBy(locator: any): Locator {
 		if(typeof locator == "string" && locator.match(/^([A-Za-z]+)=.+/)){
 			let locatorObj = this.parse_locator(locator)
 			return By[locatorObj.type](locatorObj.locator)
@@ -362,7 +362,7 @@ export class SelCommand {
 	}
 
 
-	parse_locator(locator) {
+	parse_locator(locator: string) {
 		if (!locator) {
 		  throw new TypeError('Locator cannot be empty')
 		}

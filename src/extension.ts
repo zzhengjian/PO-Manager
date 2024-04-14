@@ -11,7 +11,7 @@ import { PageViewProvider } from './PageView';
 import { DebuggerViewProvider } from './DebuggerViewProvider';
 
 
-let driver = null, selCommand:SelCommand = null, server, extSocket
+let driver = null, selCommand:SelCommand = null
 let browser = vscode.workspace.getConfiguration('browsers').get('browser')
 vscode.commands.executeCommand('setContext', 'BrowserName', browser);
 vscode.workspace.onDidChangeConfiguration(() => {

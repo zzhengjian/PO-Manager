@@ -3,10 +3,23 @@ import * as json from 'jsonc-parser';
 import * as path from 'path';
 var jsonFormat = require('json-format')
 
+/**
+ * Provides an outline view for JSON files in the editor.
+ */
+/**
+ * Represents a provider for the JSON outline view in VS Code.
+ */
 export class JsonOutlineProvider implements vscode.TreeDataProvider<number> {
 
+	/**
+	 * Event that fires when the tree data changes.
+	 */
 	private _onDidChangeTreeData: vscode.EventEmitter<number | null> = new vscode.EventEmitter<number | null>();
 	readonly onDidChangeTreeData: vscode.Event<number | null> = this._onDidChangeTreeData.event;
+
+	/**
+	 * Event that fires when the window state changes.
+	 */
 	private _onDidChangeWindowState: vscode.EventEmitter<vscode.WindowState | null> = new vscode.EventEmitter<vscode.WindowState | null>();
 	readonly onDidChangeWindowState: vscode.Event<vscode.WindowState | null> = this._onDidChangeWindowState.event;
 
@@ -15,6 +28,10 @@ export class JsonOutlineProvider implements vscode.TreeDataProvider<number> {
 	private editor: vscode.TextEditor;
 	private autoRefresh = true;
 
+	/**
+	 * Creates a new instance of the JsonOutlineProvider class.
+	 * @param context The extension context.
+	 */
 	constructor(private context: vscode.ExtensionContext) {
 		vscode.window.onDidChangeActiveTextEditor(() => this.onActiveEditorChanged());
 		vscode.workspace.onDidChangeTextDocument(e => this.onDocumentChanged(e));
@@ -26,6 +43,10 @@ export class JsonOutlineProvider implements vscode.TreeDataProvider<number> {
 		this.onActiveEditorChanged();
 	}
 
+	/**
+	 * Refreshes the JSON outline.
+	 * @param offset The offset to fire the tree data change event for.
+	 */
 	refresh(offset?: number): void {
 		this.parseTree();
 		if (offset) {
@@ -35,6 +56,11 @@ export class JsonOutlineProvider implements vscode.TreeDataProvider<number> {
 		}
 	}
 
+	/**
+	 * Gets the locator at the specified offset.
+	 * @param offset The offset to get the locator for.
+	 * @returns The locator at the specified offset.
+	 */
 	getLocator(offset?: number): string {
 		const location = json.getLocation(this.text, offset)
 		const jPath = location.path;
@@ -43,8 +69,11 @@ export class JsonOutlineProvider implements vscode.TreeDataProvider<number> {
 		return node
 	}
 
+	/**
+	 * Renames the property at the specified offset.
+	 * @param offset The offset of the property to rename.
+	 */
 	rename(offset: number): void {
-		
 		vscode.window.showInputBox({ placeHolder: 'Enter the new label' })
 			.then(value => {
 				if (value !== null && value !== undefined) {
@@ -68,6 +97,11 @@ export class JsonOutlineProvider implements vscode.TreeDataProvider<number> {
 			});
 	}
 
+	/**
+	 * Updates the locator at the specified offset.
+	 * @param locator The new locator value.
+	 * @param offset The offset of the locator to update.
+	 */
 	updateLocator(locator: string, offset: number): void {
 		const path = json.getLocation(this.text, offset).path;
 		const valueNode = json.findNodeAtLocation(this.tree, path);
@@ -91,9 +125,13 @@ export class JsonOutlineProvider implements vscode.TreeDataProvider<number> {
 			throw new Error(
 			  'Implicit locators are obsolete, please prepend the strategy (e.g. id=element).'
 			)
-		  }
+		}
 	}
 
+	/**
+	 * Adds an element to the JSON document.
+	 * @param element The element to add.
+	 */
 	addElement(element: string): void {
 		this.editor.edit(editBuilder => {
 			let selection = this.editor.selection
@@ -119,6 +157,10 @@ export class JsonOutlineProvider implements vscode.TreeDataProvider<number> {
 		});
 	}
 
+	/**
+	 * Adds multiple elements to the JSON document.
+	 * @param elements The elements to add.
+	 */
 	addElements(elements: string): void {
 		this.editor.edit(editBuilder => {
 			let selection = this.editor.selection
@@ -144,6 +186,9 @@ export class JsonOutlineProvider implements vscode.TreeDataProvider<number> {
 		});
 	}
 
+	/**
+	 * Handles the active editor change event.
+	 */
 	private onActiveEditorChanged(): void {
 		if (vscode.window.activeTextEditor) {
 			if (vscode.window.activeTextEditor.document.uri.scheme === 'file' ) {
@@ -159,6 +204,10 @@ export class JsonOutlineProvider implements vscode.TreeDataProvider<number> {
 		}
 	}
 
+	/**
+	 * Handles the document change event.
+	 * @param changeEvent The text document change event.
+	 */
 	private onDocumentChanged(changeEvent: vscode.TextDocumentChangeEvent): void {
 		if (this.autoRefresh && changeEvent.document.uri.toString() === this.editor.document.uri.toString()) {
 			for (const change of changeEvent.contentChanges) {
@@ -171,6 +220,9 @@ export class JsonOutlineProvider implements vscode.TreeDataProvider<number> {
 		}
 	}
 
+	/**
+	 * Parses the JSON tree from the active editor's document.
+	 */
 	private parseTree(): void {
 		this.text = '';
 		this.tree = null;
@@ -182,6 +234,11 @@ export class JsonOutlineProvider implements vscode.TreeDataProvider<number> {
 		}
 	}
 
+	/**
+	 * Gets the children of a node in the JSON tree.
+	 * @param offset The offset of the node.
+	 * @returns A promise that resolves to an array of child offsets.
+	 */
 	getChildren(offset?: number): Thenable<number[]> {
 		if (offset) {
 			const path = json.getLocation(this.text, offset).path;
@@ -195,6 +252,11 @@ export class JsonOutlineProvider implements vscode.TreeDataProvider<number> {
 		}
 	}
 
+	/**
+	 * Gets the child offsets of a node in the JSON tree.
+	 * @param node The parent node.
+	 * @returns An array of child offsets.
+	 */
 	private getChildrenOffsets(node: json.Node): number[] {
 		const offsets: number[] = [];
 		for (const child of node.children) {
@@ -207,6 +269,11 @@ export class JsonOutlineProvider implements vscode.TreeDataProvider<number> {
 		return offsets;
 	}
 
+	/**
+	 * Gets the tree item for a given offset in the JSON tree.
+	 * @param offset The offset of the tree item.
+	 * @returns The tree item.
+	 */
 	getTreeItem(offset: number): vscode.TreeItem {
 		const path = json.getLocation(this.text, offset).path;
 		const valueNode = json.findNodeAtLocation(this.tree, path);
@@ -229,11 +296,19 @@ export class JsonOutlineProvider implements vscode.TreeDataProvider<number> {
 		return null;
 	}
 
+	/**
+	 * Selects the specified range in the active editor.
+	 * @param range The range to select.
+	 */
 	select(range: vscode.Range) {
 		this.editor.selection = new vscode.Selection(range.start, range.end);
 		this.editor.revealRange(range)
 	}
 
+	/**
+	 * Gets the selected text in the active editor.
+	 * @returns The selected text.
+	 */
 	getSelectedText(): any {
 		let selections = vscode.window.activeTextEditor.selections
 		let textArr = []
@@ -246,6 +321,11 @@ export class JsonOutlineProvider implements vscode.TreeDataProvider<number> {
 		return textArr.join('|')
 	}
 
+	/**
+	 * Gets the label for a JSON node.
+	 * @param node The JSON node.
+	 * @returns The label for the node.
+	 */
 	private getLabel(node: json.Node): string {
 		if (node.parent.type === 'array') {
 			const prefix = node.parent.children.indexOf(node).toString();
@@ -268,6 +348,7 @@ export class JsonOutlineProvider implements vscode.TreeDataProvider<number> {
 				}
 			}
 			const value = this.editor.document.getText(new vscode.Range(this.editor.document.positionAt(node.offset), this.editor.document.positionAt(node.offset + node.length)));
+
 			return `${property}: ${value}`;
 		}
 	}
